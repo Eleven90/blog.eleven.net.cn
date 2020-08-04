@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>自动修改 node_moduels 的包 | blog.eleven.net.cn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有时候 node_modules 中的第三方包有问题或需要修改几行源码，我们可以怎么办？  去给作者提 issues？可能得不到回复。  自己在 node_modules 里直接修改源码？下一次重新安装包，或者其他同事 install 的时候，被修改过的源码又恢复如初了。  不用他的包，自己写一个？……   社区提供了一个工具：patch-package，专门用来处理修改 node_modules">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动修改 node_moduels 的包">
+<meta property="og:url" content="https://blog.eleven.net.cn/2020/06/11/patch-packages/index/index.html">
+<meta property="og:site_name" content="blog.eleven.net.cn">
+<meta property="og:description" content="有时候 node_modules 中的第三方包有问题或需要修改几行源码，我们可以怎么办？  去给作者提 issues？可能得不到回复。  自己在 node_modules 里直接修改源码？下一次重新安装包，或者其他同事 install 的时候，被修改过的源码又恢复如初了。  不用他的包，自己写一个？……   社区提供了一个工具：patch-package，专门用来处理修改 node_modules">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?w=418&h=102&f=png&s=11416">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/27/1711bcf316c96916?w=2240&h=288&f=png&s=90956">
+<meta property="article:published_time" content="2020-06-11T02:23:01.000Z">
+<meta property="article:modified_time" content="2020-08-04T16:05:27.266Z">
+<meta property="article:author" content="Eleven">
+<meta property="article:tag" content="NPM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">blog.eleven.net.cn</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.eleven.net.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-patch-packages/index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/patch-packages/index/" class="article-date">
+  <time datetime="2020-06-11T02:23:01.000Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/NPM/">NPM</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自动修改 node_moduels 的包
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有时候 node_modules 中的第三方包有问题或需要修改几行源码，我们可以怎么办？</p>
+<ol>
+<li><p>去给作者提 issues？可能得不到回复。</p>
+</li>
+<li><p>自己在 node_modules 里直接修改源码？下一次重新安装包，或者其他同事 install 的时候，被修改过的源码又恢复如初了。</p>
+</li>
+<li><p>不用他的包，自己写一个？……</p>
+</li>
+</ol>
+<p>社区提供了一个工具：<a href="https://github.com/ds300/patch-package" target="_blank" rel="noopener">patch-package</a>，专门用来处理修改 node_modules 包源码的问题。</p>
+<p>需要区分 npm 和 yarn，二者使用方法有一些区别，分开做描述。</p>
+<h4 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h4><ol>
+<li><p>在 package.json 的 scripts 中增加如下命令：</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">+  "postinstall": "patch-package"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <code>postinstall</code> 是 npm 的钩子，会在依赖包被 <code>install</code> 之后被执行。</p>
+</li>
+<li><p>安装 patch-package</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i patch-package -D</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面两步都做了，就可以去修改 node_modules 里任意第三方包的源码了。</p>
+</li>
+<li><p>修改了源码，随后需要执行以下命令：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
+
+<p> 命令执行成功后，会发现项目根目录下多了一个文件夹 <code>patches</code>，该目录下多了文件，即为记录源码修改的文件。</p>
+<p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p> 将 <code>patches</code> 目录及文件，通过 git 提交到代码仓库。</p>
+</li>
+<li><p>Over，后续其他同学不需要做额外操作，直接安装即可，node_modules 下的源码修改会自动更新。</p>
+<p> 之前已经安装过该第三方包的同学，需要卸载，重新安装一次。</p>
+</li>
+<li><p>如果后续还有其它包也需要修改源码，修改过后，再执行一次命令：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h4><ol>
+<li><p>在 package.json 的 scripts 中增加如下命令：</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">+  "postinstall": "patch-package"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <code>postinstall</code> 是 npm 的钩子，会在依赖包被 <code>install</code> 之后被执行。</p>
+</li>
+<li><p>安装 patch-package、postinstall-postinstall</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add patch-package postinstall-postinstall -D</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面两步都做了，就可以去修改 node_modules 里任意第三方包的源码了。</p>
+</li>
+<li><p>修改了源码，随后需要执行以下命令：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
+
+<p> 命令执行成功后，会发现项目根目录下多了一个文件夹 <code>patches</code>，该目录下多了文件，即为记录源码修改的文件。</p>
+<p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?w=418&h=102&f=png&s=11416" alt=""></p>
+<p> 将 <code>patches</code> 目录及文件，通过 git 提交到代码仓库。</p>
+</li>
+<li><p>Over，后续其他同学不需要做额外操作，直接安装即可，node_modules 下的源码修改会自动更新。</p>
+<p> 之前已经安装过该第三方包的同学，需要卸载，重新安装一次。</p>
+</li>
+<li><p>如果后续还有其它包也需要修改源码，修改过后，再执行一次命令：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><ol>
+<li><p>过程中遇到一个错误，记录一下，其他人不一定会遇到。</p>
+<p> macos 在终端报如下错误:</p>
+<p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bcf316c96916?w=2240&h=288&f=png&s=90956" alt=""></p>
+<p> 可以参照这个文档解决：<a href="https://www.cnblogs.com/start-fxw/p/10192226.html" target="_blank" rel="noopener">https://www.cnblogs.com/start-fxw/p/10192226.html</a></p>
+<p> 终端运行如下命令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+
+<p> 更新一下 xcode 即可。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.eleven.net.cn/2020/06/11/patch-packages/index/" data-id="ckdg5cj0e00069crvbsctfa7o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/circular-dependency/index/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          模块间循环引用问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/npm-publish/index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NPM 包发布指南</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/circular-dependency/index/">模块间循环引用问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/patch-packages/index/">自动修改 node_moduels 的包</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/npm-publish/index/">NPM 包发布指南</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/git-commit/index/">规范 git commit</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/check-version/index/">利用 Git 钩子提交时修改版本号</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 20px;">Git</a> <a href="/tags/NPM/" style="font-size: 20px;">NPM</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Eleven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+</nav>
+    
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
