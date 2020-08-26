@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>1px 细线实现 | blog.eleven.net.cn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="采用缩放方案，单条边线好处理一点；如果需要四边都有边线，会有点麻烦，使用缩放方案，虽然可行，但是在部分设备上有间隙问题，建议放弃，或者使用 svg 来做 background-image。 以下是 less&#x2F;sass 的简单实现示例。 LESS 上边线 1px123456789101112131415161718192021222324252627282930&#x2F;** * 1px细线 - 上边线 *">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1px 细线实现">
+<meta property="og:url" content="https://blog.eleven.net.cn/2020/08/26/css/border/index.html">
+<meta property="og:site_name" content="blog.eleven.net.cn">
+<meta property="og:description" content="采用缩放方案，单条边线好处理一点；如果需要四边都有边线，会有点麻烦，使用缩放方案，虽然可行，但是在部分设备上有间隙问题，建议放弃，或者使用 svg 来做 background-image。 以下是 less&#x2F;sass 的简单实现示例。 LESS 上边线 1px123456789101112131415161718192021222324252627282930&#x2F;** * 1px细线 - 上边线 *">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-26T12:26:13.000Z">
+<meta property="article:modified_time" content="2020-08-26T12:32:07.393Z">
+<meta property="article:author" content="Eleven">
+<meta property="article:tag" content="CSS3">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">blog.eleven.net.cn</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.eleven.net.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-css/border" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/26/css/border/" class="article-date">
+  <time datetime="2020-08-26T12:26:13.000Z" itemprop="datePublished">2020-08-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CSS3/">CSS3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      1px 细线实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>采用缩放方案，单条边线好处理一点；如果需要四边都有边线，会有点麻烦，使用缩放方案，虽然可行，但是在部分设备上有间隙问题，建议放弃，或者使用 svg 来做 background-image。</p>
+<p>以下是 less/sass 的简单实现示例。</p>
+<h3 id="LESS-上边线-1px"><a href="#LESS-上边线-1px" class="headerlink" title="LESS 上边线 1px"></a>LESS 上边线 1px</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1px细线 - 上边线</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="selector-class">.border-top</span>(<span class="variable">@color</span>) &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">&amp;</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">'\0020'</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="variable">@color</span>;</span><br><span class="line">    <span class="attribute">transform-origin</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">@media</span> (<span class="attribute">-webkit-min-device-pixel-ratio</span>: <span class="number">1.5</span>) and (<span class="attribute">-webkit-max-device-pixel-ratio</span>: <span class="number">2.49</span>) &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: scaleY(<span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">@media</span> (<span class="attribute">-webkit-min-device-pixel-ratio</span>: <span class="number">2.5</span>) &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: scaleY(<span class="number">0.33333</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SASS-上下-1px-细线"><a href="#SASS-上下-1px-细线" class="headerlink" title="SASS 上下 1px 细线"></a>SASS 上下 1px 细线</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1px细线</span></span><br><span class="line"><span class="comment"> *  $position top/bottom</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">@mixin</span> border-<span class="number">1px</span>(<span class="variable">$position</span>, <span class="variable">$color</span>) &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line"></span><br><span class="line">  &amp;<span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="keyword">@if</span> <span class="variable">$position</span> == top &#123;</span><br><span class="line">      <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">@if</span> <span class="variable">$position</span> == bottom &#123;</span><br><span class="line">      <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">'\0020'</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">border</span>-#&#123;<span class="variable">$position</span>&#125;: <span class="number">1px</span> solid <span class="variable">$color</span>;</span><br><span class="line">    <span class="attribute">transform-origin</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">@media</span> (-webkit-min-device-pixel-ratio: <span class="number">1.5</span>) <span class="keyword">and</span> (-webkit-max-device-pixel-ratio: <span class="number">2.49</span>) &#123;</span><br><span class="line">    &amp;<span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: scaleY(<span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">@media</span> (-webkit-min-device-pixel-ratio: <span class="number">2.5</span>) &#123;</span><br><span class="line">    &amp;<span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: scaleY(<span class="number">0.33333</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.eleven.net.cn/2020/08/26/css/border/" data-id="ckebcw4au0000xvrv3yqv37al" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS3/" rel="tag">CSS3</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/11/circular-dependency/index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">模块间循环引用问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/26/css/border/">1px 细线实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/circular-dependency/index/">模块间循环引用问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/patch-packages/index/">自动修改 node_moduels 的包</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/npm-publish/index/">NPM 包发布指南</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/git-commit/index/">规范 git commit</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS3/">CSS3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS3/" rel="tag">CSS3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS3/" style="font-size: 10px;">CSS3</a> <a href="/tags/Git/" style="font-size: 20px;">Git</a> <a href="/tags/NPM/" style="font-size: 20px;">NPM</a> <a href="/tags/Webpack/" style="font-size: 10px;">Webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Eleven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+</nav>
+    
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
