@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>利用 Git 钩子提交时修改版本号 - 低头做事，抬头看天</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="description" content="前端项目在 git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……
+编写一个简单的 node,"> 
+    <meta name="author" content="Eleven"> 
+    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://blog.eleven.net.cn">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">利用 Git 钩子提交时修改版本号</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/Git"><b>「
+                    </b>GIT<b> 」</b></a>
+                
+                六月 11, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/06/11/check-version/index/" title="利用 Git 钩子提交时修改版本号" class="">利用 Git 钩子提交时修改版本号</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    10k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    9 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <p>前端项目在 git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……</p>
+<h4 id="编写一个简单的-node-脚本-check-version-js"><a href="#编写一个简单的-node-脚本-check-version-js" class="headerlink" title="编写一个简单的 node 脚本 check-version.js"></a>编写一个简单的 node 脚本 <code>check-version.js</code></h4><p>先安装几个依赖包 <code>yarn add inquirer chalk child_process -D</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /scripts/check-version.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inquirer = <span class="built_in">require</span>(<span class="string">&#x27;inquirer&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">&#x27;chalk&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">name</span>: projectName, <span class="attr">version</span>: versionCurrent &#125; = <span class="built_in">require</span>(<span class="string">&#x27;../package&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> regVersion = <span class="regexp">/^[1-9]&#123;1&#125;\d*\.\d+\.\d+$/</span> <span class="comment">// 示例: 1.0.0</span></span><br><span class="line"><span class="comment">// const regVersion = /^\d+\.\d+\.\d+$/ // 示例: 0.0.1 / 1.0.1</span></span><br><span class="line"><span class="comment">// const regVersion = /^\d+\.\d+\.\d+(-beta.?\d*)?$/ // 示例: 1.0.3 / 0.0.1-beta / 1.0.0-beta.3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 确认 package.json 版本号</span></span><br><span class="line">inquirer</span><br><span class="line">  .prompt([</span><br><span class="line">    &#123;</span><br><span class="line">      type: <span class="string">&#x27;input&#x27;</span>,</span><br><span class="line">      name: <span class="string">&#x27;version&#x27;</span>,</span><br><span class="line">      message: <span class="string">`请确认 <span class="subst">$&#123;projectName&#125;</span>/package.json/version 版本号（当前：<span class="subst">$&#123;versionCurrent&#125;</span>）：\n`</span>,</span><br><span class="line">      <span class="keyword">default</span>: versionCurrent,</span><br><span class="line">      <span class="function"><span class="title">validate</span>(<span class="params">version</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 校验版本号的格式</span></span><br><span class="line">        <span class="keyword">if</span> (!regVersion.test(version)) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(chalk.yellow(<span class="string">&#x27;输入的版本号无效，请检查格式（示例：1.0.0、2.3.2）&#x27;</span>))</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ])</span><br><span class="line">  .then(<span class="function">(<span class="params">&#123; version: versionNew &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (versionNew !== versionCurrent) &#123;</span><br><span class="line">      <span class="comment">// 更新 package.json version，更新时不自动生成 tag</span></span><br><span class="line">      command(<span class="string">`npm --no-git-tag-version version <span class="subst">$&#123;versionNew&#125;</span>`</span>, &#123;&#125;, <span class="function">(<span class="params">error, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(</span><br><span class="line">            chalk.green(</span><br><span class="line">              <span class="string">`\n<span class="subst">$&#123;projectName&#125;</span> 版本号（项目根目录下的 package.json/version）更新成功，version: <span class="subst">$&#123;versionNew&#125;</span> ！`</span>,</span><br><span class="line">            ),</span><br><span class="line">          )</span><br><span class="line">          command(</span><br><span class="line">            <span class="string">`git add package.json &amp;&amp; git commit -m &#x27;ci(package.json): 更新项目版本号为：<span class="subst">$&#123;versionNew&#125;</span>&#x27;`</span>,</span><br><span class="line">          )</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">`\n`</span>)</span><br><span class="line">          process.exit(<span class="number">0</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(chalk.yellow(<span class="string">`\n更新版本号（<span class="subst">$&#123;versionNew&#125;</span>）失败了~\n`</span>))</span><br><span class="line">          process.exit(<span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(chalk.green(<span class="string">`\n本次版本号未做修改，version: <span class="subst">$&#123;versionNew&#125;</span> ！\n`</span>))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">command</span>(<span class="params">cmd, options, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(chalk.cyan(cmd.toString()))</span><br><span class="line">  <span class="keyword">return</span> exec(cmd, &#123; ...options &#125;, callback)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-Git-钩子"><a href="#配置-Git-钩子" class="headerlink" title="配置 Git 钩子"></a>配置 Git 钩子</h4><ol>
+<li><p>先安装 <code>husky</code>，用于管理 git 钩子，当然，使用原生的也可以。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add husky -D</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目的 package.json 文件中增加以下配置：</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;husky&quot;: &#123;</span><br><span class="line">  &quot;hooks&quot;: &#123;</span><br><span class="line">    &quot;post-commit&quot;: &quot;exec &lt; /dev/tty &amp;&amp; node scripts/check-version.js&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>完成以上配置后，后续在执行 git commit 提交代码时，会自动在终端弹出交互，提示修改 package.json 文件的 version，如下图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/10/1729d6b37f7e5254?w=1326&h=348&f=png&s=55796" alt=""></p>
+<p>如果不需要修改直接敲击 Enter 跳过，需要则输入新的版本号，会自动执行命令修改 package.json 文件的 version，并自动提交刚刚的修改，接下来 <code>git push</code> 推送代码即可。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            <div class="post-nav">
+                <hr>
+                
+                    <div class="post-nav-item">上一篇:<a href="/2020/06/11/git-commit/index/" rel="prev" 
+                        title="规范 git commit">规范 git commit
+                      </a></div>
+                
+                
+                    <div class="post-nav-item">下一篇:<a href="/2020/06/10/zero/index/" rel="next" 
+                        title="还是搭个博客吧...">还是搭个博客吧...</a></div>
+                                
+            </div>   
+                        
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>Eleven</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">8 <p>文章</p></a></li>
+                    <li><a href="/categories">5 <p>分类</p></a></li>
+                    <li><a href="/tags">5 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2021
+        <span class="gradient-text">
+            Eleven
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?your_code"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>
