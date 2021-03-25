@@ -5,15 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>模块间循环引用问题 - 低头做事，抬头看天</title>
+    <title>模块间循环引用问题 - Eleven</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
-    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="keywords" content="Eleven,前端,"> 
     <meta name="description" content="有时候可能会遇见这样的场景：模块A引用了模块B里的func1方法，而模块B又引用了模块A里的func2方法。
 类似上面的场景，或者其它更复杂的如：A 引用 B，B 引用 C，C 又引用了 A，在不经,"> 
     <meta name="author" content="Eleven"> 
-    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="alternative" href="atom.xml" title="Eleven" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
     
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
@@ -25,10 +25,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/lib/codemirror.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/theme/dracula.css">
 
     
 <link rel="stylesheet" href="/css/obsidian.css">
@@ -49,7 +49,7 @@
             <div></div>
         </div>
     </div>
-    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <span id="config-title" style="display:none">Eleven</span>
     <div id="loader"></div>
     <div id="single">
     <div class="scrollbar gradient-bg-rev"></div>
@@ -97,13 +97,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    3.3k
+                    1.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    3 mins.
+                    1 mins.
                 </span>
                 
                 
@@ -141,8 +141,26 @@
 <p>类似上面的场景，或者其它更复杂的如：A 引用 B，B 引用 C，C 又引用了 A，在不经意间可能会遇到一些诡异问题，如：明明代码没问题，却读不到导入的模块……</p>
 <p>为了更好地避免这样的问题，可以使用 <a target="_blank" rel="noopener" href="https://github.com/aackerman/circular-dependency-plugin">circular-dependency-plugin</a> 插件来做循环引用的检测:</p>
 <p>基本用法如下，复制、粘贴即可生效：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> CircularDependencyPlugin = <span class="built_in">require</span>(<span class="string">&#x27;circular-dependency-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CircularDependencyPlugin(&#123;</span><br><span class="line">      <span class="comment">// exclude detection of files based on a RegExp</span></span><br><span class="line">      exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">      <span class="comment">// include specific files based on a RegExp</span></span><br><span class="line">      include: <span class="regexp">/src/</span>,</span><br><span class="line">      <span class="comment">// add errors to webpack instead of warnings</span></span><br><span class="line">      failOnError: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// allow import cycles that include an asyncronous import,</span></span><br><span class="line">      <span class="comment">// e.g. via import(/* webpackMode: &quot;weak&quot; */ &#x27;./file.js&#x27;)</span></span><br><span class="line">      allowAsyncCycles: <span class="literal">false</span>,</span><br><span class="line">      <span class="comment">// set the current working directory for displaying module paths</span></span><br><span class="line">      cwd: process.cwd(),</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="js">// webpack.config.js
+const CircularDependencyPlugin = require(&#39;circular-dependency-plugin&#39;)
 
+module.exports = &#123;
+  plugins: [
+    new CircularDependencyPlugin(&#123;
+      // exclude detection of files based on a RegExp
+      exclude: /node_modules/,
+      // include specific files based on a RegExp
+      include: /src/,
+      // add errors to webpack instead of warnings
+      failOnError: true,
+      // allow import cycles that include an asyncronous import,
+      // e.g. via import(/* webpackMode: &quot;weak&quot; */ &#39;./file.js&#39;)
+      allowAsyncCycles: false,
+      // set the current working directory for displaying module paths
+      cwd: process.cwd(),
+    &#125;)
+  ]
+&#125;</code></pre>
 <p>检测到问题时，会看到如下图的编译提示：</p>
 <p><img src="https://user-gold-cdn.xitu.io/2019/12/10/16eefa622ebb1ebf?w=1060&h=230&f=png&s=51565" alt=""></p>
 <p>如何解决循环引用的问题？将被循环引用到的模块提取放到另外的模块，打破这个循环即可！</p>
@@ -153,7 +171,7 @@
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
-                data-autoplay="true">
+                data-autoplay="false">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -186,22 +204,24 @@
             <div class="box animated fadeInRight">
                 <div class="subbox">
                     <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
-                    <p>Eleven</p>
-                    <span>Think like an artist, develop like an artisan</span>
-                    <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                    <span>Eleven</span>
+                    <a href="https://github.com/eleven-net-cn" target="_blank"><span
+                        class=" iconfont icon-github"></span></a>
+                    <span>人生没有重启键，一去不回头。</span>
+                    <!-- <dl>
+                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
-                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>
-                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-stack-overflow"></span></a></dd>
-                    </dl>
+                    </dl> -->
                 </div>
-                <ul>
+                <!-- <ul>
                     <li><a href="/">8 <p>文章</p></a></li>
                     <li><a href="/categories">5 <p>分类</p></a></li>
                     <li><a href="/tags">5 <p>标签</p></a></li>
-                </ul>
+                </ul> -->
             </div>
             
             
@@ -224,13 +244,7 @@
         &copy; 2021
         <span class="gradient-text">
             Eleven
-        </span>.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme
-        <span class="gradient-text">
-            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
         </span>
-        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
     </p>
 </footer>
 
@@ -305,30 +319,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
 
-<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+<script src="/codemirror-5.60.0/lib/codemirror.js"></script>
+
  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/javascript/javascript.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/css/css.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/sass/sass.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/xml/xml.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/htmlmixed/htmlmixed.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/clike/clike.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/php/php.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/shell/shell.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
-  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
-   
+ 
 <script src="/js/busuanzi.min.js"></script>
 
 <script>
@@ -413,7 +435,7 @@
     var typedTextEl = $('.typed-text');
     if (typedTextEl && typedTextEl.length > 0) {
       var typed = new Typed('.typed-text', {
-        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        strings: ['人生没有重启键，一去不回头。', '劝君莫惜金缕衣，劝君惜取少年时。'],
         typeSpeed: 90,
         loop: true,
         loopCount: Infinity,

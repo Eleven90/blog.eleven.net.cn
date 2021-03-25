@@ -5,18 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>自动修改 node_moduels 的包 - 低头做事，抬头看天</title>
+    <title>自动修改 node_moduels 的包 - Eleven</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
-    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="keywords" content="Eleven,前端,"> 
     <meta name="description" content="有时候 node_modules 中的第三方包有问题或需要修改几行源码，我们可以怎么办？
 
 去给作者提 issues？可能得不到回复。
 
 自己在 node_modules 里直接修改源码？下一次重新,"> 
     <meta name="author" content="Eleven"> 
-    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="alternative" href="atom.xml" title="Eleven" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
     
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
@@ -28,10 +28,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/lib/codemirror.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/theme/dracula.css">
 
     
 <link rel="stylesheet" href="/css/obsidian.css">
@@ -52,7 +52,7 @@
             <div></div>
         </div>
     </div>
-    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <span id="config-title" style="display:none">Eleven</span>
     <div id="loader"></div>
     <div id="single">
     <div class="scrollbar gradient-bg-rev"></div>
@@ -100,13 +100,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    4.9k
+                    3.2k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    4 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -153,18 +153,18 @@
 <p>需要区分 npm 和 yarn，二者使用方法有一些区别，分开做描述。</p>
 <h4 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h4><ol>
 <li><p>在 package.json 的 scripts 中增加如下命令：</p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">+  &quot;postinstall&quot;: &quot;patch-package&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="json"> &quot;scripts&quot;: &#123;
+ +  &quot;postinstall&quot;: &quot;patch-package&quot;
+ &#125;</code></pre>
 <p> <code>postinstall</code> 是 npm 的钩子，会在依赖包被 <code>install</code> 之后被执行。</p>
 </li>
 <li><p>安装 patch-package</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i patch-package -D</span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> npm i patch-package -D</code></pre>
 </li>
 <li><p>上面两步都做了，就可以去修改 node_modules 里任意第三方包的源码了。</p>
 </li>
 <li><p>修改了源码，随后需要执行以下命令：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> npx patch-package [package-name]  # [package-name] 是包名，不需要写路径。</code></pre>
 <p> 命令执行成功后，会发现项目根目录下多了一个文件夹 <code>patches</code>，该目录下多了文件，即为记录源码修改的文件。</p>
 <p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
 <p> 将 <code>patches</code> 目录及文件，通过 git 提交到代码仓库。</p>
@@ -173,24 +173,23 @@
 <p> 之前已经安装过该第三方包的同学，需要卸载，重新安装一次。</p>
 </li>
 <li><p>如果后续还有其它包也需要修改源码，修改过后，再执行一次命令：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> npx patch-package [package-name]  # [package-name] 是包名，不需要写路径。</code></pre>
 </li>
 </ol>
 <h4 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h4><ol>
 <li><p>在 package.json 的 scripts 中增加如下命令：</p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">+  &quot;postinstall&quot;: &quot;patch-package&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="json"> &quot;scripts&quot;: &#123;
+ +  &quot;postinstall&quot;: &quot;patch-package&quot;
+ &#125;</code></pre>
 <p> <code>postinstall</code> 是 npm 的钩子，会在依赖包被 <code>install</code> 之后被执行。</p>
 </li>
 <li><p>安装 patch-package、postinstall-postinstall</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add patch-package postinstall-postinstall -D</span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> yarn add patch-package postinstall-postinstall -D</code></pre>
 </li>
 <li><p>上面两步都做了，就可以去修改 node_modules 里任意第三方包的源码了。</p>
 </li>
 <li><p>修改了源码，随后需要执行以下命令：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> yarn patch-package [package-name]  # [package-name] 是包名，不需要写路径。</code></pre>
 <p> 命令执行成功后，会发现项目根目录下多了一个文件夹 <code>patches</code>，该目录下多了文件，即为记录源码修改的文件。</p>
 <p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bce8d8e01745?w=418&h=102&f=png&s=11416" alt=""></p>
 <p> 将 <code>patches</code> 目录及文件，通过 git 提交到代码仓库。</p>
@@ -199,9 +198,7 @@
 <p> 之前已经安装过该第三方包的同学，需要卸载，重新安装一次。</p>
 </li>
 <li><p>如果后续还有其它包也需要修改源码，修改过后，再执行一次命令：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn patch-package [package-name]  <span class="comment"># [package-name] 是包名，不需要写路径。</span></span><br></pre></td></tr></table></figure>
-
-
+<pre><code class="sh"> yarn patch-package [package-name]  # [package-name] 是包名，不需要写路径。</code></pre>
 </li>
 </ol>
 <h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><ol>
@@ -210,15 +207,14 @@
 <p> <img src="https://user-gold-cdn.xitu.io/2020/3/27/1711bcf316c96916?w=2240&h=288&f=png&s=90956" alt=""></p>
 <p> 可以参照这个文档解决：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/start-fxw/p/10192226.html">https://www.cnblogs.com/start-fxw/p/10192226.html</a></p>
 <p> 终端运行如下命令：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash"> xcode-select --install</code></pre>
 <p> 更新一下 xcode 即可。</p>
 </li>
 </ol>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
-                data-autoplay="true">
+                data-autoplay="false">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -251,22 +247,24 @@
             <div class="box animated fadeInRight">
                 <div class="subbox">
                     <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
-                    <p>Eleven</p>
-                    <span>Think like an artist, develop like an artisan</span>
-                    <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                    <span>Eleven</span>
+                    <a href="https://github.com/eleven-net-cn" target="_blank"><span
+                        class=" iconfont icon-github"></span></a>
+                    <span>人生没有重启键，一去不回头。</span>
+                    <!-- <dl>
+                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
-                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>
-                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-stack-overflow"></span></a></dd>
-                    </dl>
+                    </dl> -->
                 </div>
-                <ul>
+                <!-- <ul>
                     <li><a href="/">8 <p>文章</p></a></li>
                     <li><a href="/categories">5 <p>分类</p></a></li>
                     <li><a href="/tags">5 <p>标签</p></a></li>
-                </ul>
+                </ul> -->
             </div>
             
             
@@ -296,13 +294,7 @@
         &copy; 2021
         <span class="gradient-text">
             Eleven
-        </span>.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme
-        <span class="gradient-text">
-            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
         </span>
-        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
     </p>
 </footer>
 
@@ -377,30 +369,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
 
-<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+<script src="/codemirror-5.60.0/lib/codemirror.js"></script>
+
  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/javascript/javascript.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/css/css.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/sass/sass.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/xml/xml.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/htmlmixed/htmlmixed.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/clike/clike.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/php/php.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/shell/shell.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
-  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
-   
+ 
 <script src="/js/busuanzi.min.js"></script>
 
 <script>
@@ -485,7 +485,7 @@
     var typedTextEl = $('.typed-text');
     if (typedTextEl && typedTextEl.length > 0) {
       var typed = new Typed('.typed-text', {
-        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        strings: ['人生没有重启键，一去不回头。', '劝君莫惜金缕衣，劝君惜取少年时。'],
         typeSpeed: 90,
         loop: true,
         loopCount: Infinity,

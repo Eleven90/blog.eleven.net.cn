@@ -9,10 +9,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
-    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="keywords" content="Eleven,前端,"> 
     
     <meta name="author" content="Eleven"> 
-    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="alternative" href="atom.xml" title="Eleven" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
     
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
@@ -24,10 +24,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/lib/codemirror.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/theme/dracula.css">
 
     
 <link rel="stylesheet" href="/css/obsidian.css">
@@ -48,7 +48,7 @@
             <div></div>
         </div>
     </div>
-    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <span id="config-title" style="display:none">Eleven</span>
     <div id="loader"></div>
     <div id="single" class="page">
     <div id="top">
@@ -59,7 +59,7 @@
             <div class="main">
                 <div class="content animated fadeIn">
                     <div class="set">
-                        <h1 style="text-align: center">Archived</h1>
+                        <h1 style="text-align: center">时光轴</h1>
                         <p style="text-align: center">「 8 」</p>
                         <ul class="timeline timeline-centered">
                             
@@ -108,7 +108,10 @@
                                         <p>
                                             采用缩放方案，单条边线好处理一点；如果需要四边都有边线，会有点麻烦，使用缩放方案，虽然可行，但是在部分设备上有间隙问题，建议放弃，或者使用 svg 来做 background-image。
 以下是 less/sass 的简单实现示例。
-LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border-top(...
+LESS 上边线 1px.border-top(@color) &#123;
+  position: relative;
+
+  &amp;:before &#...
                                         </p>
                                     </div>
                                 </li>
@@ -177,14 +180,13 @@ LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border
 本机安装 nodejs
 
 推荐也安装一下 nrm，方便随时切换 npm 源
- 1sudo npm i nrm -g
-
+ sudo npm i nrm -g
  nrm 常用命令
- 12nrm ls                  # 查看所有nrm use [目标源]         # 切换至目标源
+ nrm ls                  # 查看所有
+ nrm use [目标源]         # 切换至目标源
 
 
-
-...
+二、p...
                                         </p>
                                     </div>
                                 </li>
@@ -217,7 +219,7 @@ LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border
                                         <p>
                                             前端项目在 git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……
 编写一个简单的 node 脚本 check-version.js先安装几个依赖包 yarn add inquirer chalk child_process -D
-1234567891011121314151617181...
+// /scripts/check-version.js...
                                         </p>
                                     </div>
                                 </li>
@@ -259,13 +261,7 @@ LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border
         &copy; 2021
         <span class="gradient-text">
             Eleven
-        </span>.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme
-        <span class="gradient-text">
-            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
         </span>
-        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
     </p>
 </footer>
 
@@ -340,30 +336,38 @@ LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
 
-<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+<script src="/codemirror-5.60.0/lib/codemirror.js"></script>
+
  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/javascript/javascript.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/css/css.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/sass/sass.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/xml/xml.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/htmlmixed/htmlmixed.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/clike/clike.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/php/php.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/shell/shell.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
-  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
-   
+ 
 <script src="/js/busuanzi.min.js"></script>
 
 <script>
@@ -448,7 +452,7 @@ LESS 上边线 1px1234567891011121314151617181920212223242526272829303132.border
     var typedTextEl = $('.typed-text');
     if (typedTextEl && typedTextEl.length > 0) {
       var typed = new Typed('.typed-text', {
-        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        strings: ['人生没有重启键，一去不回头。', '劝君莫惜金缕衣，劝君惜取少年时。'],
         typeSpeed: 90,
         loop: true,
         loopCount: Infinity,

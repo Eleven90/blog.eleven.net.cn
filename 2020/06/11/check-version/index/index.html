@@ -5,15 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>利用 Git 钩子提交时修改版本号 - 低头做事，抬头看天</title>
+    <title>利用 Git 钩子提交时修改版本号 - Eleven</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
-    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="keywords" content="Eleven,前端,"> 
     <meta name="description" content="前端项目在 git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……
 编写一个简单的 node,"> 
     <meta name="author" content="Eleven"> 
-    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="alternative" href="atom.xml" title="Eleven" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
     
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
@@ -25,10 +25,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/lib/codemirror.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/theme/dracula.css">
 
     
 <link rel="stylesheet" href="/css/obsidian.css">
@@ -49,7 +49,7 @@
             <div></div>
         </div>
     </div>
-    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <span id="config-title" style="display:none">Eleven</span>
     <div id="loader"></div>
     <div id="single">
     <div class="scrollbar gradient-bg-rev"></div>
@@ -97,13 +97,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    10k
+                    3.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    9 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -139,15 +139,77 @@
         <div class="content markdown animated fadeIn">
             <p>前端项目在 git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……</p>
 <h4 id="编写一个简单的-node-脚本-check-version-js"><a href="#编写一个简单的-node-脚本-check-version-js" class="headerlink" title="编写一个简单的 node 脚本 check-version.js"></a>编写一个简单的 node 脚本 <code>check-version.js</code></h4><p>先安装几个依赖包 <code>yarn add inquirer chalk child_process -D</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /scripts/check-version.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inquirer = <span class="built_in">require</span>(<span class="string">&#x27;inquirer&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">&#x27;chalk&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">name</span>: projectName, <span class="attr">version</span>: versionCurrent &#125; = <span class="built_in">require</span>(<span class="string">&#x27;../package&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> regVersion = <span class="regexp">/^[1-9]&#123;1&#125;\d*\.\d+\.\d+$/</span> <span class="comment">// 示例: 1.0.0</span></span><br><span class="line"><span class="comment">// const regVersion = /^\d+\.\d+\.\d+$/ // 示例: 0.0.1 / 1.0.1</span></span><br><span class="line"><span class="comment">// const regVersion = /^\d+\.\d+\.\d+(-beta.?\d*)?$/ // 示例: 1.0.3 / 0.0.1-beta / 1.0.0-beta.3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 确认 package.json 版本号</span></span><br><span class="line">inquirer</span><br><span class="line">  .prompt([</span><br><span class="line">    &#123;</span><br><span class="line">      type: <span class="string">&#x27;input&#x27;</span>,</span><br><span class="line">      name: <span class="string">&#x27;version&#x27;</span>,</span><br><span class="line">      message: <span class="string">`请确认 <span class="subst">$&#123;projectName&#125;</span>/package.json/version 版本号（当前：<span class="subst">$&#123;versionCurrent&#125;</span>）：\n`</span>,</span><br><span class="line">      <span class="keyword">default</span>: versionCurrent,</span><br><span class="line">      <span class="function"><span class="title">validate</span>(<span class="params">version</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 校验版本号的格式</span></span><br><span class="line">        <span class="keyword">if</span> (!regVersion.test(version)) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(chalk.yellow(<span class="string">&#x27;输入的版本号无效，请检查格式（示例：1.0.0、2.3.2）&#x27;</span>))</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ])</span><br><span class="line">  .then(<span class="function">(<span class="params">&#123; version: versionNew &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (versionNew !== versionCurrent) &#123;</span><br><span class="line">      <span class="comment">// 更新 package.json version，更新时不自动生成 tag</span></span><br><span class="line">      command(<span class="string">`npm --no-git-tag-version version <span class="subst">$&#123;versionNew&#125;</span>`</span>, &#123;&#125;, <span class="function">(<span class="params">error, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(</span><br><span class="line">            chalk.green(</span><br><span class="line">              <span class="string">`\n<span class="subst">$&#123;projectName&#125;</span> 版本号（项目根目录下的 package.json/version）更新成功，version: <span class="subst">$&#123;versionNew&#125;</span> ！`</span>,</span><br><span class="line">            ),</span><br><span class="line">          )</span><br><span class="line">          command(</span><br><span class="line">            <span class="string">`git add package.json &amp;&amp; git commit -m &#x27;ci(package.json): 更新项目版本号为：<span class="subst">$&#123;versionNew&#125;</span>&#x27;`</span>,</span><br><span class="line">          )</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">`\n`</span>)</span><br><span class="line">          process.exit(<span class="number">0</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(chalk.yellow(<span class="string">`\n更新版本号（<span class="subst">$&#123;versionNew&#125;</span>）失败了~\n`</span>))</span><br><span class="line">          process.exit(<span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(chalk.green(<span class="string">`\n本次版本号未做修改，version: <span class="subst">$&#123;versionNew&#125;</span> ！\n`</span>))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">command</span>(<span class="params">cmd, options, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(chalk.cyan(cmd.toString()))</span><br><span class="line">  <span class="keyword">return</span> exec(cmd, &#123; ...options &#125;, callback)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="js">// /scripts/check-version.js
 
+const inquirer = require(&#39;inquirer&#39;)
+const chalk = require(&#39;chalk&#39;)
+const &#123; exec &#125; = require(&#39;child_process&#39;)
+const &#123; name: projectName, version: versionCurrent &#125; = require(&#39;../package&#39;)
+
+const regVersion = /^[1-9]&#123;1&#125;\d*\.\d+\.\d+$/ // 示例: 1.0.0
+// const regVersion = /^\d+\.\d+\.\d+$/ // 示例: 0.0.1 / 1.0.1
+// const regVersion = /^\d+\.\d+\.\d+(-beta.?\d*)?$/ // 示例: 1.0.3 / 0.0.1-beta / 1.0.0-beta.3
+
+console.log(&#39;\n&#39;)
+
+// 确认 package.json 版本号
+inquirer
+  .prompt([
+    &#123;
+      type: &#39;input&#39;,
+      name: &#39;version&#39;,
+      message: `请确认 $&#123;projectName&#125;/package.json/version 版本号（当前：$&#123;versionCurrent&#125;）：\n`,
+      default: versionCurrent,
+      validate(version) &#123;
+        // 校验版本号的格式
+        if (!regVersion.test(version)) &#123;
+          console.log(chalk.yellow(&#39;输入的版本号无效，请检查格式（示例：1.0.0、2.3.2）&#39;))
+          return false
+        &#125;
+        return true
+      &#125;,
+    &#125;,
+  ])
+  .then((&#123; version: versionNew &#125;) =&gt; &#123;
+    if (versionNew !== versionCurrent) &#123;
+      // 更新 package.json version，更新时不自动生成 tag
+      command(`npm --no-git-tag-version version $&#123;versionNew&#125;`, &#123;&#125;, (error, stdout, stderr) =&gt; &#123;
+        if (!error) &#123;
+          console.log(
+            chalk.green(
+              `\n$&#123;projectName&#125; 版本号（项目根目录下的 package.json/version）更新成功，version: $&#123;versionNew&#125; ！`,
+            ),
+          )
+          command(
+            `git add package.json &amp;&amp; git commit -m &#39;ci(package.json): 更新项目版本号为：$&#123;versionNew&#125;&#39;`,
+          )
+          console.log(`\n`)
+          process.exit(0)
+        &#125; else &#123;
+          console.log(chalk.yellow(`\n更新版本号（$&#123;versionNew&#125;）失败了~\n`))
+          process.exit(1)
+        &#125;
+      &#125;)
+    &#125; else &#123;
+      console.log(chalk.green(`\n本次版本号未做修改，version: $&#123;versionNew&#125; ！\n`))
+    &#125;
+  &#125;)
+
+function command(cmd, options, callback) &#123;
+  console.log(&#39;\n&#39;)
+  console.log(chalk.cyan(cmd.toString()))
+  return exec(cmd, &#123; ...options &#125;, callback)
+&#125;</code></pre>
 <h4 id="配置-Git-钩子"><a href="#配置-Git-钩子" class="headerlink" title="配置 Git 钩子"></a>配置 Git 钩子</h4><ol>
 <li><p>先安装 <code>husky</code>，用于管理 git 钩子，当然，使用原生的也可以。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add husky -D</span><br></pre></td></tr></table></figure>
+<pre><code class="bash"> yarn add husky -D</code></pre>
 </li>
 <li><p>在项目的 package.json 文件中增加以下配置：</p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;husky&quot;: &#123;</span><br><span class="line">  &quot;hooks&quot;: &#123;</span><br><span class="line">    &quot;post-commit&quot;: &quot;exec &lt; /dev/tty &amp;&amp; node scripts/check-version.js&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="json"> &quot;husky&quot;: &#123;
+   &quot;hooks&quot;: &#123;
+     &quot;post-commit&quot;: &quot;exec &lt; /dev/tty &amp;&amp; node scripts/check-version.js&quot;
+   &#125;
+ &#125;,</code></pre>
 </li>
 </ol>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>完成以上配置后，后续在执行 git commit 提交代码时，会自动在终端弹出交互，提示修改 package.json 文件的 version，如下图：</p>
@@ -156,7 +218,7 @@
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
-                data-autoplay="true">
+                data-autoplay="false">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -189,22 +251,24 @@
             <div class="box animated fadeInRight">
                 <div class="subbox">
                     <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
-                    <p>Eleven</p>
-                    <span>Think like an artist, develop like an artisan</span>
-                    <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                    <span>Eleven</span>
+                    <a href="https://github.com/eleven-net-cn" target="_blank"><span
+                        class=" iconfont icon-github"></span></a>
+                    <span>人生没有重启键，一去不回头。</span>
+                    <!-- <dl>
+                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
-                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>
-                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-stack-overflow"></span></a></dd>
-                    </dl>
+                    </dl> -->
                 </div>
-                <ul>
+                <!-- <ul>
                     <li><a href="/">8 <p>文章</p></a></li>
                     <li><a href="/categories">5 <p>分类</p></a></li>
                     <li><a href="/tags">5 <p>标签</p></a></li>
-                </ul>
+                </ul> -->
             </div>
             
             
@@ -227,13 +291,7 @@
         &copy; 2021
         <span class="gradient-text">
             Eleven
-        </span>.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme
-        <span class="gradient-text">
-            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
         </span>
-        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
     </p>
 </footer>
 
@@ -308,30 +366,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
 
-<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+<script src="/codemirror-5.60.0/lib/codemirror.js"></script>
+
  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/javascript/javascript.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/css/css.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/sass/sass.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/xml/xml.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/htmlmixed/htmlmixed.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/clike/clike.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/php/php.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/shell/shell.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
-  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
-   
+ 
 <script src="/js/busuanzi.min.js"></script>
 
 <script>
@@ -416,7 +482,7 @@
     var typedTextEl = $('.typed-text');
     if (typedTextEl && typedTextEl.length > 0) {
       var typed = new Typed('.typed-text', {
-        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        strings: ['人生没有重启键，一去不回头。', '劝君莫惜金缕衣，劝君惜取少年时。'],
         typeSpeed: 90,
         loop: true,
         loopCount: Infinity,

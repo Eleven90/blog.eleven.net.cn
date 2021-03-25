@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NPM 包发布指南 - 低头做事，抬头看天</title>
+    <title>NPM 包发布指南 - Eleven</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
-    <meta name="keywords" content="eleven,前端,"> 
+    <meta name="keywords" content="Eleven,前端,"> 
     <meta name="description" content="一、准备工作
 在 NPM 官网注册账号，https://www.npmjs.com
  邮件验证的时候可能需要翻墙访问。
@@ -19,7 +19,7 @@
 推荐也安装一下 nrm，方便随时切换 npm 源
 ,"> 
     <meta name="author" content="Eleven"> 
-    <link rel="alternative" href="atom.xml" title="低头做事，抬头看天" type="application/atom+xml"> 
+    <link rel="alternative" href="atom.xml" title="Eleven" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
     
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
@@ -31,10 +31,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/lib/codemirror.css">
 
     
-<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+<link rel="stylesheet" href="/codemirror-5.60.0/theme/dracula.css">
 
     
 <link rel="stylesheet" href="/css/obsidian.css">
@@ -55,7 +55,7 @@
             <div></div>
         </div>
     </div>
-    <span id="config-title" style="display:none">低头做事，抬头看天</span>
+    <span id="config-title" style="display:none">Eleven</span>
     <div id="loader"></div>
     <div id="single">
     <div class="scrollbar gradient-bg-rev"></div>
@@ -103,13 +103,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    11k
+                    5.6k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    10 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -150,16 +150,36 @@
 <li><p>本机安装 nodejs</p>
 </li>
 <li><p>推荐也安装一下 nrm，方便随时切换 npm 源</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm i nrm -g</span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> sudo npm i nrm -g</code></pre>
 <p> nrm 常用命令</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nrm ls                  <span class="comment"># 查看所有</span></span><br><span class="line">nrm use [目标源]         <span class="comment"># 切换至目标源</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> nrm ls                  # 查看所有
+ nrm use [目标源]         # 切换至目标源</code></pre>
 </li>
 </ol>
 <h4 id="二、package-json-文件"><a href="#二、package-json-文件" class="headerlink" title="二、package.json 文件"></a>二、package.json 文件</h4><p>包的<strong>根目录</strong>需要有一个 package.json 文件，可以通过 <code>npm init</code> 命令去创建，示例如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;@eleven.xi/reset.css&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;1.0.6&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;H5 网页 reset 方案，PC&amp;mobile&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;main&quot;</span>: <span class="string">&quot;lib/reset.css&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;release&quot;</span>: <span class="string">&quot;npm publish . --access=public&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;repository&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;git+https://github.com/Eleven90/reset.css.git&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;keywords&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;reset.css&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;author&quot;</span>: <span class="string">&quot;Eleven&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;license&quot;</span>: <span class="string">&quot;ISC&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;bugs&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;https://github.com/Eleven90/reset.css/issues&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;homepage&quot;</span>: <span class="string">&quot;https://github.com/Eleven90/reset.css#readme&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;files&quot;</span>: [<span class="string">&quot;lib&quot;</span>, <span class="string">&quot;ReadMe.md&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="json">&#123;
+  &quot;name&quot;: &quot;@eleven.xi/reset.css&quot;,
+  &quot;version&quot;: &quot;1.0.6&quot;,
+  &quot;description&quot;: &quot;H5 网页 reset 方案，PC&amp;mobile&quot;,
+  &quot;main&quot;: &quot;lib/reset.css&quot;,
+  &quot;scripts&quot;: &#123;
+    &quot;release&quot;: &quot;npm publish . --access=public&quot;
+  &#125;,
+  &quot;repository&quot;: &#123;
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;git+https://github.com/Eleven90/reset.css.git&quot;
+  &#125;,
+  &quot;keywords&quot;: [
+    &quot;reset.css&quot;
+  ],
+  &quot;author&quot;: &quot;Eleven&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;bugs&quot;: &#123;
+    &quot;url&quot;: &quot;https://github.com/Eleven90/reset.css/issues&quot;
+  &#125;,
+  &quot;homepage&quot;: &quot;https://github.com/Eleven90/reset.css#readme&quot;,
+  &quot;files&quot;: [&quot;lib&quot;, &quot;ReadMe.md&quot;]
+&#125;</code></pre>
 <p><strong>文件中重点注意以下几项：</strong></p>
 <ol>
 <li><p>main：指定包的入口文件</p>
@@ -226,30 +246,45 @@
 </ol>
 </li>
 <li><p>以下文件、目录在发布时，默认会被忽略</p>
- <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.*.swp</span><br><span class="line">._*</span><br><span class="line">.DS_Store</span><br><span class="line">.git</span><br><span class="line">.hg</span><br><span class="line">.npmrc</span><br><span class="line">.lock-wscript</span><br><span class="line">.svn</span><br><span class="line">.wafpickle-*</span><br><span class="line">config.gypi</span><br><span class="line">CVS</span><br><span class="line">npm-debug.log</span><br><span class="line">node_modules/</span><br></pre></td></tr></table></figure>
+<pre><code class="txt"> .*.swp
+ ._*
+ .DS_Store
+ .git
+ .hg
+ .npmrc
+ .lock-wscript
+ .svn
+ .wafpickle-*
+ config.gypi
+ CVS
+ npm-debug.log
+ node_modules/</code></pre>
 </li>
 <li><p>以下文件、目录在发布时，默认会被包含，无法忽略掉</p>
- <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">package.json</span><br><span class="line">README (and its variants)</span><br><span class="line">CHANGELOG (and its variants)</span><br><span class="line">LICENSE / LICENCE</span><br></pre></td></tr></table></figure>
-
+<pre><code class="txt"> package.json
+ README (and its variants)
+ CHANGELOG (and its variants)
+ LICENSE / LICENCE</code></pre>
 </li>
 </ol>
 <h4 id="四、发布"><a href="#四、发布" class="headerlink" title="四、发布"></a>四、发布</h4><ol>
 <li><p>登录 NPM 账号</p>
 <ol>
 <li><p>在终端运行命令，填写账号、密码及邮箱。</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm adduser / npm login</span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> npm adduser / npm login</code></pre>
 </li>
 <li><p>查看是否登录上了？</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm who am i</span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> npm who am i</code></pre>
 </li>
 <li><p>通常只有一个人可以发布，也可以添加多人，相关命令如下：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm owner ls &lt;package name&gt;             <span class="comment"># 查看</span></span><br><span class="line">npm owner add &lt;user&gt; &lt;package name&gt;     <span class="comment"># 添加</span></span><br><span class="line">npm owner rm &lt;user&gt; &lt;package name&gt;      <span class="comment"># 删除</span></span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> npm owner ls &lt;package name&gt;             # 查看
+ npm owner add &lt;user&gt; &lt;package name&gt;     # 添加
+ npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
 </li>
 </ol>
 </li>
 <li><p>发布</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish . --access=public</span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> npm publish . --access=public</code></pre>
 <ol>
 <li><p>这里注意一下发布命令中的点 <code>.</code> ，如果不带 <code>.</code> ，偶尔碰到发布会出错。</p>
 </li>
@@ -260,8 +295,7 @@
 </ol>
 </li>
 <li><p>撤回已发布的版本</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm unpublish -f &lt;package name&gt;@&lt;package version&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> npm unpublish -f &lt;package name&gt;@&lt;package version&gt;</code></pre>
 <ol>
 <li><p>包发布后的 72 小时内，可以撤回。</p>
 </li>
@@ -272,10 +306,9 @@
 <li><p>其它问题</p>
 <ol>
 <li><p>偶尔可能会看到如下错误:</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">no_perms Private mode <span class="built_in">enable</span>, only admin can publish this module</span><br></pre></td></tr></table></figure>
-
+<pre><code class="sh"> no_perms Private mode enable, only admin can publish this module</code></pre>
 <p> 解决办法：</p>
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry http://registry.npmjs.org</span><br></pre></td></tr></table></figure>
+<pre><code class="sh"> npm config set registry http://registry.npmjs.org</code></pre>
 </li>
 <li><p>NPM 官方提供了发布的指导：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/misc/developers">https://docs.npmjs.com/misc/developers</a> ，如果遇到一些奇怪的问题，建议前往阅读。</p>
 </li>
@@ -285,7 +318,7 @@
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
-                data-autoplay="true">
+                data-autoplay="false">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -318,22 +351,24 @@
             <div class="box animated fadeInRight">
                 <div class="subbox">
                     <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
-                    <p>Eleven</p>
-                    <span>Think like an artist, develop like an artisan</span>
-                    <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                    <span>Eleven</span>
+                    <a href="https://github.com/eleven-net-cn" target="_blank"><span
+                        class=" iconfont icon-github"></span></a>
+                    <span>人生没有重启键，一去不回头。</span>
+                    <!-- <dl>
+                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
-                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>
-                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                        <dd><a href="" target="_blank"><span
                                     class=" iconfont icon-stack-overflow"></span></a></dd>
-                    </dl>
+                    </dl> -->
                 </div>
-                <ul>
+                <!-- <ul>
                     <li><a href="/">8 <p>文章</p></a></li>
                     <li><a href="/categories">5 <p>分类</p></a></li>
                     <li><a href="/tags">5 <p>标签</p></a></li>
-                </ul>
+                </ul> -->
             </div>
             
             
@@ -356,13 +391,7 @@
         &copy; 2021
         <span class="gradient-text">
             Eleven
-        </span>.
-        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        Theme
-        <span class="gradient-text">
-            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
         </span>
-        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.5" target="_blank" rel="noopener">v1.4.5</a></small>
     </p>
 </footer>
 
@@ -437,30 +466,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
 
-<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+<script src="/codemirror-5.60.0/lib/codemirror.js"></script>
+
  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/javascript/javascript.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/css/css.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/less/less.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/sass/sass.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/sass/sass.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/xml/xml.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/scss/scss.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/htmlmixed/htmlmixed.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/clike/clike.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/php/php.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/shell/shell.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+<script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
-  
-<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
-   
+ 
 <script src="/js/busuanzi.min.js"></script>
 
 <script>
@@ -545,7 +582,7 @@
     var typedTextEl = $('.typed-text');
     if (typedTextEl && typedTextEl.length > 0) {
       var typed = new Typed('.typed-text', {
-        strings: ['Think like an artist, develop like an artisan', '艺术家思维去思考问题，工匠创造精神去开发'],
+        strings: ['人生没有重启键，一去不回头。', '劝君莫惜金缕衣，劝君惜取少年时。'],
         typeSpeed: 90,
         loop: true,
         loopCount: Infinity,
