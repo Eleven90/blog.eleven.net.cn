@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>无 eject 重写 cra 配置（craco）</title>
+      <title>无 eject 重写 CRA 配置 —— craco 详解</title>
       <link href="/2020/09/11/cra-rewrite/index/"/>
       <url>/2020/09/11/cra-rewrite/index/</url>
       
@@ -183,7 +183,7 @@
       <link href="/2020/06/10/zero/index/"/>
       <url>/2020/06/10/zero/index/</url>
       
-        <content type="html"><![CDATA[<p>搭一个技术博客这件事，一直比较纠结，想想没那么多东西可以写，写也没什么人看，那么搭这么个东西意义是啥？</p><p>想记录什么资料，往往会选择印象笔记，其次在 <a href="https://juejin.im/user/5c41b586f265da6142742a44">掘金</a>、<a href="https://segmentfault.com/u/xeleven">SegmentFault</a> 整理一些内容，还有朋友创建的 <a href="http://jsdr.info/">技术小分队</a> 记录一些。</p><p>久而久之，可能确实有一些东西值得写下来。那么，索性就把博客搭起来吧，搜索、查阅好用一点…</p><p>有用的，没用的，想到什么写什么…</p>]]></content>
+        <content type="html"><![CDATA[<p>搭技术博客这件事，一直比较纠结，想想没那么多东西可以写，也不会有多少流量，那么搭这个东西意义是啥？</p><p>想记录什么资料，往往会选择印象笔记，其次在 <a href="https://juejin.im/user/5c41b586f265da6142742a44">掘金</a>、<a href="https://segmentfault.com/u/xeleven">SegmentFault</a> 整理一些内容，还有朋友创建的 <a href="http://jsdr.info/">技术小分队</a> 记录一些。</p><p>但是，久而久之，确实有一些东西值得写下来。</p><p>索性博客搭起来吧，将来搜索、查阅好用一点…</p><p>有用的、没用的，想到什么写什么…</p>]]></content>
       
       
       
