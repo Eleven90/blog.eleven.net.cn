@@ -2745,6 +2745,13 @@ h1.title {
   position: relative;
   font-weight: 900;
 }
+.content a.headerlink:after {
+  top: 0;
+  bottom: 1px;
+  left: -7px;
+  width: 5px;
+  opacity: 1;
+}
 .content a:after {
   content: "";
   position: absolute;
