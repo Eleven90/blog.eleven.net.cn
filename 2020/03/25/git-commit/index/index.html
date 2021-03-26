@@ -5,19 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NPM 包发布指南 - Eleven的博客</title>
+    <title>规范 git commit - Eleven的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    <meta name="description" content="一、准备工作
-在 NPM 官网注册账号，https://www.npmjs.com
- 邮件验证的时候可能需要翻墙访问。
+    <meta name="description" content="如何让 git commit 提交时更加规范？例如：vue、angular，如下图。规范化地提交记录，会让将来的回溯查找更容易，也让其他人阅读起来更加简便。
 
-本机安装 nodejs
-
-推荐也安装一下 nrm，方便随时切换 npm 源
-,"> 
+最近读到一篇不错的文章（你可能已经忽略,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,7 +59,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://blog.eleven.net.cn">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">NPM 包发布指南</h3>
+        <h3 class="subtitle">规范 git commit</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -91,25 +86,25 @@
         <div class="else">
             <p class="animated fadeInDown">
                 
-                <a href="/categories/NPM"><b>「
-                    </b>NPM<b> 」</b></a>
+                <a href="/categories/Git"><b>「
+                    </b>GIT<b> 」</b></a>
                 
-                六月 11, 2020
+                三月 25, 2020
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2020/06/11/npm-publish/index/" title="NPM 包发布指南" class="">NPM 包发布指南</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/03/25/git-commit/index/" title="规范 git commit" class="">规范 git commit</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    5.6k
+                    3.9k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    5 mins.
+                    4 mins.
                 </span>
                 
                 
@@ -122,7 +117,7 @@
             </p>
             
             
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/NPM/" rel="tag">NPM</a></li></ul>
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
             
         </div>
     </div>
@@ -143,178 +138,83 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h4 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h4><ol>
-<li><p>在 NPM 官网注册账号，<a target="_blank" rel="noopener" href="https://www.npmjs.com">https://www.npmjs.com</a></p>
-<p> 邮件验证的时候可能需要翻墙访问。</p>
-</li>
-<li><p>本机安装 nodejs</p>
-</li>
-<li><p>推荐也安装一下 nrm，方便随时切换 npm 源</p>
-<pre><code class="sh"> sudo npm i nrm -g</code></pre>
-<p> nrm 常用命令</p>
-<pre><code class="sh"> nrm ls                  # 查看所有
- nrm use [目标源]         # 切换至目标源</code></pre>
-</li>
-</ol>
-<h4 id="二、package-json-文件"><a href="#二、package-json-文件" class="headerlink" title="二、package.json 文件"></a>二、package.json 文件</h4><p>包的<strong>根目录</strong>需要有一个 package.json 文件，可以通过 <code>npm init</code> 命令去创建，示例如下：</p>
-<pre><code class="json">&#123;
-  &quot;name&quot;: &quot;@eleven.xi/reset.css&quot;,
-  &quot;version&quot;: &quot;1.0.6&quot;,
-  &quot;description&quot;: &quot;H5 网页 reset 方案，PC&amp;mobile&quot;,
-  &quot;main&quot;: &quot;lib/reset.css&quot;,
-  &quot;scripts&quot;: &#123;
-    &quot;release&quot;: &quot;npm publish . --access=public&quot;
-  &#125;,
-  &quot;repository&quot;: &#123;
-    &quot;type&quot;: &quot;git&quot;,
-    &quot;url&quot;: &quot;git+https://github.com/Eleven90/reset.css.git&quot;
-  &#125;,
-  &quot;keywords&quot;: [
-    &quot;reset.css&quot;
-  ],
-  &quot;author&quot;: &quot;Eleven&quot;,
-  &quot;license&quot;: &quot;ISC&quot;,
-  &quot;bugs&quot;: &#123;
-    &quot;url&quot;: &quot;https://github.com/Eleven90/reset.css/issues&quot;
-  &#125;,
-  &quot;homepage&quot;: &quot;https://github.com/Eleven90/reset.css#readme&quot;,
-  &quot;files&quot;: [&quot;lib&quot;, &quot;ReadMe.md&quot;]
-&#125;</code></pre>
-<p><strong>文件中重点注意以下几项：</strong></p>
+            <p>如何让 <code>git commit</code> 提交时更加规范？例如：vue、angular，如下图。规范化地提交记录，会让将来的回溯查找更容易，也让其他人阅读起来更加简便。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/172081ff77566188?w=996&h=1021&f=png&s=251160" alt=""></p>
+<p>最近读到一篇不错的文章（<a target="_blank" rel="noopener" href="https://juejin.im/post/5e0c82a15188253a907111dc">你可能已经忽略的 git commit 规范</a>），吸取下养分，顺便做个记录。文章介绍得很清楚，建议阅读原文，不做额外赘述，以下为集成到项目的快速指南。</p>
+<h2 id="快速指南"><a href="#快速指南" class="headerlink" title="快速指南"></a>快速指南</h2><p>使用到的工具 <a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli">commitizen</a>、<a target="_blank" rel="noopener" href="https://github.com/typicode/husky">husky</a>、<a target="_blank" rel="noopener" href="https://github.com/carloscuesta/gitmoji-cli">gitmoji-cli</a>，cz-conventional-changelog 是 angular 的 commit message 格式。</p>
+<p>所有包不推荐 global 安装，而仅项目本地安装，方便多人开发时，减少其他人的额外操作。</p>
 <ol>
-<li><p>main：指定包的入口文件</p>
+<li><p>安装工具</p>
+<pre><code class="bash"> yarn add commitizen cz-conventional-changelog -D</code></pre>
 </li>
-<li><p>name：指定包名</p>
+<li><p>在项目根目录的 package.json 中添加配置</p>
+<pre><code class="json"> &#123;
+   &quot;scripts&quot;: &#123;
+     &quot;commit&quot;: &quot;git-cz&quot;
+   &#125;,
+   &quot;config&quot;: &#123;
+     &quot;commitizen&quot;: &#123;
+       &quot;path&quot;: &quot;./node_modules/cz-conventional-changelog&quot;
+     &#125;
+   &#125;
+ &#125;</code></pre>
+<p> 官方推荐的是 global 安装 commitizen，然后执行 <code>commitizen init cz-conventional-changelog --yarn --dev --exact</code> 去自动添加 cz-conventional-changelog，自动在 package.json 中添加 config 配置，不太推荐这种方式。</p>
+</li>
+<li><p>使用</p>
 <ul>
-<li><p>发布之前都要去<a target="_blank" rel="noopener" href="https://www.npmjs.com">NPM 官网</a>上搜索一遍，确认想要使用的包名，是否已经被占用。</p>
+<li><p><code>git commit</code> 仍然是普通的 git 提交模式</p>
 </li>
-<li><p>包名支持 [@scope]/[package name] 的形式，[@scope] 类似于命名空间的作用，NPM 默认允许你使用自己注册的用户名，或者在自己的账户下申请的 organizations。</p>
-<p>  典型的例子，如 Babel，插件原先使用的是 babel-plugin-xxx 的格式命名，后来因为许多个人发布的包和官方的包命名格式一样，导致难以区分，现在 babel 官方所有的包都更换成了 @babel/xxx 的格式。</p>
+<li><p><code>yarn commit</code> 会执行交互式 commit 提交，在终端跟着提示一步步输入即可。</p>
 </li>
 </ul>
 </li>
-<li><p>version：包的版本</p>
-<ul>
-<li>格式 <code>数字.数字.数字</code>，每一次发布，版本都必须要更新，只能往上增加。</li>
+<li><p>限制每一次 <code>git commit</code> 都执行交互式提交</p>
+<p> 如果想要更暴力一点，限制每一次 <code>git commit</code> 都自动执行规范化地提交，可以配置 git 提交的钩子，借助 husky 更方便一点（不用 husky 当然也可以）。</p>
+<p> 先将 scripts 中配置的 commit 命令删除，不再需要了。</p>
+<p> 安装 husky</p>
+<pre><code class="bash"> yarn add husky -D</code></pre>
+<p> 在 package.json 中增加配置</p>
+<pre><code class="json"> &#123;
+   &quot;husky&quot;: &#123;
+     &quot;hooks&quot;: &#123;
+       &quot;prepare-commit-msg&quot;: &quot;exec &lt; /dev/tty &amp;&amp; git cz --hook || true&quot;
+     &#125;
+   &#125;,
+ &#125;</code></pre>
+<p> 有些时候可能不太需要所有的 commit 都执行规范化的提交流程，因此，推荐不要这么暴力限制，而是仅在关键性的提交步骤才执行。</p>
+</li>
+</ol>
+<h2 id="在提交中支持表情符号"><a href="#在提交中支持表情符号" class="headerlink" title="在提交中支持表情符号"></a>在提交中支持表情符号</h2><p>如果想要在提交中使用一些表情符号，如下图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/172086dbf52c646f?w=2016&h=1570&f=png&s=405106" alt=""></p>
+<p>可以借助 <a target="_blank" rel="noopener" href="https://github.com/carloscuesta/gitmoji-cli">gitmoji-cli</a></p>
+<p>安装</p>
+<pre><code class="bash">yarn add gitmoji-cli -D</code></pre>
+<p>使用方法：在提交时按照约定格式输入表情字符即可（左右两边英文冒号夹着字符，例如bug ☞ <code>:bug:</code>），提交后会自动被显示，示例：</p>
+<pre><code class="bash">git commit -m &quot;fix(src): :bug: 修复列表显示问题&quot;</code></pre>
+<p>如果想要查看所有的表情符号及介绍，可以<a target="_blank" rel="noopener" href="https://gitmoji.carloscuesta.me/">去官方文档查阅</a>，也可以全局安装</p>
+<p><code>npm i -g gitmoji-cli</code></p>
+<p>执行 <code>gitmoji -l</code> 命令在终端查看。</p>
+<h2 id="常见的-commit-类型"><a href="#常见的-commit-类型" class="headerlink" title="常见的 commit 类型"></a>常见的 commit 类型</h2><ul>
+<li>feat: 新增feature</li>
+<li>fix: 修复bug</li>
+<li>docs: 仅仅修改了文档，如readme.md</li>
+<li>style: 仅仅是对格式进行修改，如逗号、缩进、空格等。不改变代码逻辑。</li>
+<li>refactor: 代码重构，没有新增功能或修复bug</li>
+<li>perf: 优化相关，如提升性能、用户体验等。</li>
+<li>test: 测试用例，包括单元测试、集成测试。</li>
+<li>chore: 改变构建流程、或者增加依赖库、工具等。</li>
+<li>revert: 版本回滚</li>
 </ul>
-</li>
-<li><p>keywords：关键词</p>
+<h2 id="自己手写-commit-的推荐写法"><a href="#自己手写-commit-的推荐写法" class="headerlink" title="自己手写 commit 的推荐写法"></a>自己手写 commit 的推荐写法</h2><p>如果通过简单的 git commit -m “” 提交，你大概可以这样写：</p>
+<pre><code class="bash">git commit -m &quot;feat(player): 播放功能开发完成&quot;</code></pre>
+<p>引号内即 commit 的 message:</p>
 <ul>
-<li>希望别人通过哪些关键词搜索到你的包，可以在这里添加。</li>
+<li>feat 表明本次提交的类型</li>
+<li>括号内容是本次代码的影响目录/文件</li>
+<li>冒号后面是本次提交的简短描述（冒号后面推荐来个空格）  </li>
 </ul>
-</li>
-<li><p>files：指定哪些文件夹、文件将被发布</p>
-<ul>
-<li><p>如果你的项目目录下包含了一些隐私文件，不希望被发布出去，一定要注意配置此项，仅包含可以被发布的文件夹、文件。</p>
-</li>
-<li><p>可以在包的根目录下新建文件 <code>.npmignore</code>，指定哪些文件不被发布，书写格式与 <code>.gitignore</code> 文件一致。</p>
-</li>
-</ul>
-<ol start="6">
-<li><p>license：协议，推荐阅读了解几种开源的协议：</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/86251523e898">七种开源许可证</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://spdx.org/licenses/">SPDX License List</a></p>
-</li>
-</ul>
-</li>
-<li><p>description、repository、author、bugs、homepage 等项，通常也推荐填写完整，详细的 package.json 每一项的含义，推荐阅读这一篇：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengxiuchen86/article/details/81285030">npm package.json属性详解</a> 。</p>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="三、待发布的包结构"><a href="#三、待发布的包结构" class="headerlink" title="三、待发布的包结构"></a>三、待发布的包结构</h4><ol>
-<li><p>移除不必要的代码</p>
-<p> 发布出去的包，一般只需要包含用户使用时必须要 <code>install</code> 下载的文件即可，例如一些构建脚本等无关的代码文件，不必发布出去。</p>
-<p> 例如：你有一个开源项目，同时，该项目也提供了包供开发者使用，最佳方式应该是将该项目源码推送到 GitHub 上开源，而发布到 NPM 仓库的包，尽量不要把项目源码目录、构建脚本等非必要的文件发布到 NPM 仓库，会增大包的体积，导致安装时间变长。</p>
-</li>
-<li><p>发布的包尽量要做好语法转译，否则要在文档中说明，提醒使用者自己完成。</p>
-</li>
-<li><p>保护隐私</p>
-<p> 如果待发布的包，并非开源项目，而仅仅是为了提供开发者 NPM 安装、使用，一定要做好隐私保护工作，防止源码、隐私的文档等隐秘信息被发布到 NPM 仓库。可以选用的方法如下：</p>
-<ol>
-<li><p><code>.gitignore</code> 设置忽略哪些文件</p>
-<p>   .gitignore 设置的忽略文件，在 git 代码管理和 npm publish 都会被忽略。</p>
-</li>
-<li><p>.npmignore 设置忽略哪些文件</p>
-<p>   .npmignore 优先级更高，如果同时使用了 .npmignore 和 .gitignore，只有 .npmignore 会生效。</p>
-</li>
-<li><p>package.json 文件的 files 字段</p>
-<p>   直接在 package.json 文件中配置 <code>files</code>，指定发布哪些文件、目录，优先级高于 .npmignore 和 .gitignore。</p>
-</li>
-</ol>
-</li>
-<li><p>以下文件、目录在发布时，默认会被忽略</p>
-<pre><code class="txt"> .*.swp
- ._*
- .DS_Store
- .git
- .hg
- .npmrc
- .lock-wscript
- .svn
- .wafpickle-*
- config.gypi
- CVS
- npm-debug.log
- node_modules/</code></pre>
-</li>
-<li><p>以下文件、目录在发布时，默认会被包含，无法忽略掉</p>
-<pre><code class="txt"> package.json
- README (and its variants)
- CHANGELOG (and its variants)
- LICENSE / LICENCE</code></pre>
-</li>
-</ol>
-<h4 id="四、发布"><a href="#四、发布" class="headerlink" title="四、发布"></a>四、发布</h4><ol>
-<li><p>登录 NPM 账号</p>
-<ol>
-<li><p>在终端运行命令，填写账号、密码及邮箱。</p>
-<pre><code class="sh"> npm adduser / npm login</code></pre>
-</li>
-<li><p>查看是否登录上了？</p>
-<pre><code class="sh"> npm who am i</code></pre>
-</li>
-<li><p>通常只有一个人可以发布，也可以添加多人，相关命令如下：</p>
-<pre><code class="sh"> npm owner ls &lt;package name&gt;             # 查看
- npm owner add &lt;user&gt; &lt;package name&gt;     # 添加
- npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
-</li>
-</ol>
-</li>
-<li><p>发布</p>
-<pre><code class="sh"> npm publish . --access=public</code></pre>
-<ol>
-<li><p>这里注意一下发布命令中的点 <code>.</code> ，如果不带 <code>.</code> ，偶尔碰到发布会出错。</p>
-</li>
-<li><p>包名重复（或者说已被占用）、未登录，都会导致发布失败，注意看提示信息。</p>
-</li>
-<li><p>注意版本号必须要递增，相同的版本号或版本号递减会发布失败。</p>
-</li>
-</ol>
-</li>
-<li><p>撤回已发布的版本</p>
-<pre><code class="sh"> npm unpublish -f &lt;package name&gt;@&lt;package version&gt;</code></pre>
-<ol>
-<li><p>包发布后的 72 小时内，可以撤回。</p>
-</li>
-<li><p>已撤回的版本，该版本号就不能再重新发布了，因为在 NPM 的仓库中已经有了记录。</p>
-</li>
-</ol>
-</li>
-<li><p>其它问题</p>
-<ol>
-<li><p>偶尔可能会看到如下错误:</p>
-<pre><code class="sh"> no_perms Private mode enable, only admin can publish this module</code></pre>
-<p> 解决办法：</p>
-<pre><code class="sh"> npm config set registry http://registry.npmjs.org</code></pre>
-</li>
-<li><p>NPM 官方提供了发布的指导：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/misc/developers">https://docs.npmjs.com/misc/developers</a> ，如果遇到一些奇怪的问题，建议前往阅读。</p>
-</li>
-</ol>
-</li>
-</ol>
+<p>加点表情符号（当然，你要先安装 gitmoji-cli）：</p>
+<pre><code class="bash">git commit -m &quot;feat(player): :rocket: 播放功能开发完成&quot;</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -325,7 +225,7 @@
             <ul id="audio-list" style="display:none">
                 
                 
-                <li title='0' data-url='/statics/Beautiful In White.mp3'></li>
+                <li title='0' data-url='/statics/平凡之路.mp3'></li>
                 
                     
             </ul>
@@ -334,13 +234,13 @@
             <div class="post-nav">
                 <hr>
                 
-                    <div class="post-nav-item">上一篇:<a href="/2020/06/11/patch-packages/index/" rel="prev" 
-                        title="自动修改 node_moduels 的包">自动修改 node_moduels 的包
+                    <div class="post-nav-item">上一篇:<a href="/2020/05/10/npm-publish/index/" rel="prev" 
+                        title="NPM 包发布指南">NPM 包发布指南
                       </a></div>
                 
                 
-                    <div class="post-nav-item">下一篇:<a href="/2020/06/11/git-commit/index/" rel="next" 
-                        title="规范 git commit">规范 git commit</a></div>
+                    <div class="post-nav-item">下一篇:<a href="/2020/03/12/check-version/index/" rel="next" 
+                        title="Git Hook 提交时修改版本号">Git Hook 提交时修改版本号</a></div>
                                 
             </div>   
                         
@@ -369,13 +269,20 @@
                     </dl> -->
                 </div>
                 <!-- <ul>
-                    <li><a href="/">7 <p>文章</p></a></li>
-                    <li><a href="/categories">5 <p>分类</p></a></li>
-                    <li><a href="/tags">5 <p>标签</p></a></li>
+                    <li><a href="/">9 <p>文章</p></a></li>
+                    <li><a href="/categories">7 <p>分类</p></a></li>
+                    <li><a href="/tags">7 <p>标签</p></a></li>
                 </ul> -->
             </div>
             
             
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">快速指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%8F%90%E4%BA%A4%E4%B8%AD%E6%94%AF%E6%8C%81%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.</span> <span class="toc-text">在提交中支持表情符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84-commit-%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">常见的 commit 类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%B7%B1%E6%89%8B%E5%86%99-commit-%E7%9A%84%E6%8E%A8%E8%8D%90%E5%86%99%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">自己手写 commit 的推荐写法</span></a></li></ol>
+                </div>
+            </div>
             
             
         </div>

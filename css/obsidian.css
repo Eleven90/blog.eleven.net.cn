@@ -781,7 +781,7 @@ body.touch .article {
   z-index: 11;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0;
   height: 10px;
   background: #100e17;
   border-left: 1px solid #201c29;
@@ -1030,14 +1030,40 @@ footer .copyright a {
   right: 0;
   top: 0;
 }
+.menu.menu-second {
+  display: none;
+  position: absolute;
+  top: 32px;
+  left: 0;
+  height: auto;
+  flex-direction: column;
+  min-width: 240px;
+  padding: 10px 10px;
+  border-radius: 3px;
+  background-color: rgba(0,0,0,0.5);
+}
+.menu.menu-second li {
+  display: inline-block;
+  font-size: 16px;
+  margin: 0;
+  text-align: left;
+}
+.menu.menu-second li a {
+  font-weight: bold;
+  white-space: nowrap;
+}
 .menu li {
+  position: relative;
   animation-delay: 600ms;
   animation-duration: 1.2s;
   display: flex;
   flex-direction: row-reverse;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 32px;
   margin: 0 20px 20px 0;
+}
+.menu li:hover .menu-second {
+  display: inline-flex;
 }
 .menu li.search-bar {
   position: relative;
@@ -1075,9 +1101,9 @@ footer .copyright a {
   opacity: 0.8;
   font-weight: 700;
 }
-.menu a {
+.menu .menu-second-info {
   color: #666;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   background: rgba(255,255,255,0.96);
   opacity: 0.86;
   -webkit-background-clip: text !important;
@@ -1086,6 +1112,21 @@ footer .copyright a {
   box-decoration-break: clone !important;
   height: 32px;
   line-height: 32px;
+  cursor: default;
+  font-weight: bold;
+}
+.menu a {
+  color: #666;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.96);
+  opacity: 0.86;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  height: 32px;
+  line-height: 32px;
+  font-weight: bold;
 }
 .menu a:hover {
   color: #333;
@@ -2041,7 +2082,7 @@ h1.title {
   margin-top: 5px;
 }
 .article .sidebar .box .subbox .span-wrapper span {
-  font-size: 16px;
+  font-size: 18px;
 }
 .article .sidebar .box .subbox .span-wrapper:hover span {
   color: var(--secondary);

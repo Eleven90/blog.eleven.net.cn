@@ -5,12 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Category: react - Eleven的博客</title>
+    <title>如何管理应用内的请求? - Eleven的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    
+    <meta name="description" content="如何管理应用内的接口请求？
+这是一个值得讨论的问题，涉及如下若干方面：
+
+避免多次调用同一个请求（不同页面或不同组件）？
+失败了自动重试？
+切换浏览器 tab 返回页面时，自动发送请求更新数据？
+列,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -50,183 +56,75 @@
     </div>
     <span id="config-title" style="display:none">Eleven的博客</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-            
-        
-            
-        
-            
-                <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                    <a target="_blank" rel="noopener" href="https://webpack.eleven.net.cn/" title="Webpack专题" external="false">Webpack专题</a>
-                </li>
-            
-        
-            
-                <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                    <a target="_blank" rel="noopener" href="https://github.com/eleven-net-cn" title="GitHub" external="false">GitHub</a>
-                </li>
-            
-        
-            
-                <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                    <a href="/archives/" title="时光轴" external="false">时光轴</a>
-                </li>
-            
-        
-    </ul>
-    <p class="copyright" id="copyright">
-        &copy; 2021 eleven.net.cn
-    </p>
-</div>
-
-<div id="container">
-    
-<div class="search-box">
-    <form class="site-search-form">
-        <span class="iconfont icon-search"></span>
-        <input type="text" id="local-search-input" class="st-search-input" />
-        <div class="iconfont icon-cross search-box-close"></div>
-    </form>
-    <div class="search-scrollable">
-        <div id="local-search-result" class="local-search-result-cls" data-initialise="首次搜索，正在载入索引文件，请稍后……"
-            data-start="输入关键词搜索。" data-empty="没有找到内容，请尝试更换检索词。">
-            <span>输入关键词搜索。</span>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://blog.eleven.net.cn">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">如何管理应用内的请求?</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div id="header">
-    <div>
-        <div class="logo animated fadeInDown">
-            <img src="/img/favicon.png" alt="">
-            <!-- <a class="image-logo" href="/"></a> -->
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.1), #100e17),
+                url(/img/welcome-cover.jpg) ">
         </div>
-        <ul id="menu-menu" class="menu text-menu">
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/React"><b>「
+                    </b>REACT<b> 」</b></a>
+                
+                三月 27, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/03/27/react/query/" title="如何管理应用内的请求?" class="">如何管理应用内的请求?</a>
+            </h3>
             
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    800
+                </span>
                 
                 
-                    <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                        <p class="menu-second-info">效率工具</p>
-                        <ul class="menu menu-second text-menu">
-                            
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                    <a target="_blank" rel="noopener" href="https://github.com/eleven-net-cn/library-starter" title="library-starter" external="false" class="menu-link">library-starter</a>
-
-                                </li>
-                            
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                    <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@eleven.fe/cra-template-typescript" title="cra-template-typescript" external="false" class="menu-link">cra-template-typescript</a>
-
-                                </li>
-                            
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                    <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@eleven.fe/cra-template" title="cra-template" external="false" class="menu-link">cra-template</a>
-
-                                </li>
-                            
-                        </ul>
-                    </li>
-                
-            
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    1 mins.
+                </span>
                 
                 
-                    <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                        <p class="menu-second-info">通用类库</p>
-                        <ul class="menu menu-second text-menu">
-                            
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                    <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@eleven.fe/reset.css" title="reset.css" external="false" class="menu-link">reset.css</a>
-
-                                </li>
-                            
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                    <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@eleven.fe/ball-collision" title="ball-collision" external="false" class="menu-link">ball-collision</a>
-
-                                </li>
-                            
-                        </ul>
-                    </li>
                 
-            
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
                 
-                
-                    <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                        <a target="_blank" rel="noopener" href="https://webpack.eleven.net.cn/" title="Webpack专题" external="false" class="menu-link">Webpack专题</a>
-                    </li>
-                
-            
-                
-                
-                    <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                        <a target="_blank" rel="noopener" href="https://github.com/eleven-net-cn" title="GitHub" external="false" class="menu-link">GitHub</a>
-                    </li>
-                
-            
-                
-                
-                    <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
-                        <a href="/archives/" title="时光轴" external="false" class="menu-link">时光轴</a>
-                    </li>
-                
+            </p>
             
             
-            <li class="animated fadeInDown search-bar iconfont icon-search"></li>
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
             
-        </ul>
-        <div class="iconfont icon-menu switchmenu gradient-text animated fadeInDown"></div>
-    </div>
-</div>
-<div id="screen">
-    <div id="mark">
-        <div class="cover animated fadeIn" style="
-            animation-delay: 900ms;
-            animation-duration: 2.8s;
-            background-image:
-                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.2), #100e17),
-                url(/img/abc/3701616737444_.pic_hd.jpg);">
         </div>
     </div>
-    
-    <div id="post0" class="else">
-        <p class="animated fadeInDown">
-            
-            <a href="/categories/react"><b>「
-                </b>REACT<b> 」</b></a>
-            
-            九月 11, 2020
-        </p>
-        <h3 class="post-title animated fadeInDown">
-            <a href="/2020/09/11/cra-rewrite/index/" title="无 eject 重写 CRA 配置 — Craco 详解" class="posttitle">无 eject 重写 CRA 配置 — Craco 详解</a></h3>
-        
-        <p class="post-count animated fadeInDown">
-            
-            <span>
-                <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                20k
-            </span>
-            
-            
-            <span>
-                <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                18 mins.
-            </span>
-            
-            
-        </p>
-        
-        
-        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/create-react-app/" rel="tag">create-react-app</a></li></ul>
-        
-        <div class="md-content animated fadeIn">
-            
-            <p>使用 CRA 脚手架创建的项目，如果想要修改编译配置，通常可能会选择 <code>npm run eject</code> 弹出配置后魔改。但是，eject 是不可逆操作，弹出配置后，你将无法跟随官方的脚步去升级项目的 react...</p>
-            
-            <span class="read-more"><a href="/2020/09/11/cra-rewrite/index/" title="查看全文" class="posttitle">查看全文</a>
-                <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-    
 </div>
 
 <div class="screen-gradient-after">
@@ -234,20 +132,98 @@
         <div class="screen-gradient-content-inside">
             <div class="bold-underline-links screen-gradient-sponsor">
                 <p>
-                    <span class="typed-text"></span>
+                    <span class="animated fadeIn delay-1s"></span>
                 </p>
             </div>
         </div>
     </div>
 </div>
 
-    <div id="primary">
-        
-    </div>
-    
-</div>
-<div id="preview"></div>
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <p>如何管理应用内的接口请求？</p>
+<p>这是一个值得讨论的问题，涉及如下若干方面：</p>
+<ol>
+<li>避免多次调用同一个请求（不同页面或不同组件）？</li>
+<li>失败了自动重试？</li>
+<li>切换浏览器 tab 返回页面时，自动发送请求更新数据？</li>
+<li>列表滚动位置恢复？</li>
+<li>…….</li>
+</ol>
+<p>这些问题可以在以下几个社区方案里找到答案（react-query 似乎更胜一筹）：</p>
+<ul>
+<li>reacrt-query：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/261146977">https://zhuanlan.zhihu.com/p/261146977</a></li>
+<li>swr：<a target="_blank" rel="noopener" href="https://swr.vercel.app/zh-CN">https://swr.vercel.app/zh-CN</a></li>
+<li>ahooks/useRequest：<a target="_blank" rel="noopener" href="https://ahooks.js.org/zh-CN/hooks/async">https://ahooks.js.org/zh-CN/hooks/async</a></li>
+</ul>
+<p>许多人会将多处使用的接口数据，存储到 Redux 等全局状态去管理，以减少重复的请求。理论上来说这是不合理的，状态管理会因此而变得混乱、臃肿，也给代码编写带来了额外的负担。</p>
+<p>使用以上方案后，类库内部自动管理接口数据的状态，暂且称之为“服务端状态”，在任意的页面、组件都可以保持相同的 Hooks 方式调用，而全局只会发送一次请求，因此，状态管理需要存储的数据可以大幅减少。除此之外，还有自动重试、切屏更新数据等强大的封装功能，是日常应用开发的利器。</p>
 
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/平凡之路.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            <div class="post-nav">
+                <hr>
+                
+                
+                    <div class="post-nav-item">下一篇:<a href="/2021/03/26/core-js/babel-compile/" rel="next" 
+                        title="Babel 编译误伤 core-js？">Babel 编译误伤 core-js？</a></div>
+                                
+            </div>   
+                        
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img class="author-pic" src="/img/abc/eleven.net.cn.jpeg" height=300 width=300></img>
+                    <div class="span-wrapper">
+                        <a href="https://github.com/eleven-net-cn" target="_blank">
+                            <span class=" iconfont icon-github"></span>
+                            <span>eleven.net.cn</span>
+                        </a>
+                    </div>
+                    <p>人生没有重启键，一去不回头。</p>
+                    <!-- <span>人生没有重启键，一去不回头。</span> -->
+                    <!-- <dl>
+                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl> -->
+                </div>
+                <!-- <ul>
+                    <li><a href="/">9 <p>文章</p></a></li>
+                    <li><a href="/categories">7 <p>分类</p></a></li>
+                    <li><a href="/tags">7 <p>标签</p></a></li>
+                </ul> -->
+            </div>
+            
+            
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
     <div id="back-to-top" class="animated fadeIn faster">
         <div class="flow"></div>
         <span class="percentage animated fadeIn faster">0%</span>
