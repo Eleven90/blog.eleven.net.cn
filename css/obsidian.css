@@ -360,8 +360,10 @@ audio {
 }
 .logo img {
   display: flex;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .logo .image-logo {
   margin-left: 0.5rem;
@@ -2810,26 +2812,19 @@ h1.title {
 }
 .content hr {
   display: block;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  border: 0;
+  margin: 100px 0 50px;
   font-size: 28px;
   font-weight: 300;
   unicode-bidi: isolate;
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
-  margin-inline-start: auto;
   margin-inline-end: auto;
   border: none;
   text-align: center;
   color: var(--code-gradient-dark);
 }
 .content hr:before {
-  content: "...";
-  line-height: 1.4;
-  font-style: italic;
-  text-indent: 0.6em;
-  letter-spacing: 0.6em;
+  display: block;
+  content: "";
+  border-bottom: 1px dotted #ddd;
 }
 .content p {
   margin: 0 0 2em;
