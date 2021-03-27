@@ -1,5 +1,7 @@
 :root {
   --font-color: #333;
+  --font-color-light-01: #666;
+  --font-color-light-02: #999;
   --night-font-color: #ddd;
   --primary: #b2fefa;
   --secondary: #3eaf7c;

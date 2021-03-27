@@ -1,5 +1,7 @@
 :root {
   --font-color: #333;
+  --font-color-light-01: #666;
+  --font-color-light-02: #999;
   --night-font-color: #ddd;
   --primary: #b2fefa;
   --secondary: #3eaf7c;
@@ -2105,7 +2107,7 @@ h1.title {
   border-right: 1px solid rgba(158,158,158,0.16);
 }
 .article .sidebar .box ul li a {
-  color: var(--dark);
+  color: var(--font-color-light-01);
 }
 .article .sidebar .box ul li:last-of-type {
   border-right: none;

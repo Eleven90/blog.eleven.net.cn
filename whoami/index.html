@@ -5,13 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>模块间循环引用问题 - Eleven的博客</title>
+    <title>Eleven的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    <meta name="description" content="有时候可能会遇见这样的场景：模块A引用了模块B里的func1方法，而模块B又引用了模块A里的func2方法。
-类似上面的场景，或者其它更复杂的如：A 引用 B，B 引用 C，C 又引用了 A，在不经,"> 
+    
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/abc/eleven.net.cn.jpeg"> 
@@ -51,192 +50,24 @@
     </div>
     <span id="config-title" style="display:none">Eleven的博客</span>
     <div id="loader"></div>
-    <div id="single">
-    <div class="scrollbar gradient-bg-rev"></div>
-<div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <div class="navigation animated fadeIn fast delay-1s">
-        <img id="home-icon" class="icon-home" src="/img/abc/eleven.net.cn.jpeg" alt="" data-url="https://blog.eleven.net.cn">
-        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">模块间循环引用问题</h3>
-        <div class="social">
-            <!--        <div class="like-icon">-->
-            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
-            <!--        </div>-->
-            <div>
-                <div class="share">
-                    
+    <div id="single" class="page">
+    <div id="top">
+        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
+    </div>
+    <div class="clone-element"></div>
+    <div class="section dark-obsidian">
+        <div class="article animated fadeIn">
+            <div class="main animated fadeIn">
+                <div class="content animated fadeIn">
+                
+                        <h2 id="关于我…"><a href="#关于我…" class="headerlink" title="关于我…"></a>关于我…</h2>
+                
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    <div class="section">
-        <div class=article-header-wrapper>
-    <div class="article-header">
-        <div class="article-cover animated fadeIn" style="
-            animation-delay: 600ms;
-            animation-duration: 1.2s;
-            background-image: 
-                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.1), #100e17),
-                url(/img/welcome-cover.jpg) ">
-        </div>
-        <div class="else">
-            <p class="animated fadeInDown">
-                
-                <a href="/categories/Webpack"><b>「
-                    </b>WEBPACK<b> 」</b></a>
-                
-                六月 11, 2020
-            </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2020/06/11/circular-dependency/index/" title="模块间循环引用问题" class="">模块间循环引用问题</a>
-            </h3>
-            
-            <p class="post-count animated fadeInDown">
-                
-                <span>
-                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    1.5k
-                </span>
-                
-                
-                <span>
-                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    1 mins.
-                </span>
-                
-                
-                
-                <span id="busuanzi_container_page_pv">
-                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
-                    <span id="busuanzi_value_page_pv">0</span>
-                </span>
-                
-            </p>
-            
-            
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li></ul>
-            
-        </div>
-    </div>
-</div>
-
-<div class="screen-gradient-after">
-    <div class="screen-gradient-content">
-        <div class="screen-gradient-content-inside">
-            <div class="bold-underline-links screen-gradient-sponsor">
-                <p>
-                    <span class="animated fadeIn delay-1s"></span>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="article">
-    <div class='main'>
-        <div class="content markdown animated fadeIn">
-            <p>有时候可能会遇见这样的场景：模块A引用了模块B里的func1方法，而模块B又引用了模块A里的func2方法。</p>
-<p>类似上面的场景，或者其它更复杂的如：A 引用 B，B 引用 C，C 又引用了 A，在不经意间可能会遇到一些诡异问题，如：明明代码没问题，却读不到导入的模块……</p>
-<p>为了更好地避免这样的问题，可以使用 <a target="_blank" rel="noopener" href="https://github.com/aackerman/circular-dependency-plugin">circular-dependency-plugin</a> 插件来做循环引用的检测:</p>
-<p>基本用法如下，复制、粘贴即可生效：</p>
-<pre><code class="js">// webpack.config.js
-const CircularDependencyPlugin = require(&#39;circular-dependency-plugin&#39;)
-
-module.exports = &#123;
-  plugins: [
-    new CircularDependencyPlugin(&#123;
-      // exclude detection of files based on a RegExp
-      exclude: /node_modules/,
-      // include specific files based on a RegExp
-      include: /src/,
-      // add errors to webpack instead of warnings
-      failOnError: true,
-      // allow import cycles that include an asyncronous import,
-      // e.g. via import(/* webpackMode: &quot;weak&quot; */ &#39;./file.js&#39;)
-      allowAsyncCycles: false,
-      // set the current working directory for displaying module paths
-      cwd: process.cwd(),
-    &#125;)
-  ]
-&#125;</code></pre>
-<p>检测到问题时，会看到如下图的编译提示：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/12/10/16eefa622ebb1ebf?w=1060&h=230&f=png&s=51565" alt=""></p>
-<p>如何解决循环引用的问题？将被循环引用到的模块提取放到另外的模块，打破这个循环即可！</p>
-<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ol>
-<li><a target="_blank" rel="noopener" href="https://www.imooc.com/article/260265">webpack 与循环引用</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/11/circular-dependency.html">JavaScript 模块的循环加载</a></li>
-</ol>
-
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls"
-                data-autoplay="true">
-                <source type="audio/mpeg" src="">
-            </audio>
-            
-            <ul id="audio-list" style="display:none">
-                
-                
-                <li title='0' data-url='/statics/平凡之路.mp3'></li>
-                
-                    
-            </ul>
-            
-            
-            <div class="post-nav">
-                <hr>
-                
-                    <div class="post-nav-item">上一篇：<a href="/2020/08/26/css/border/" rel="prev" 
-                        title="1px 细线实现">1px 细线实现
-                      </a></div>
-                
-                
-                    <div class="post-nav-item">下一篇：<a href="/2020/06/11/patch-packages/index/" rel="next" 
-                        title="自动修改 node_moduels 的包">自动修改 node_moduels 的包</a></div>
-                                
-            </div>   
-                        
-            
-            
-        </div>
-        <div class="sidebar">
-            <div class="box animated fadeInRight">
-                <div class="subbox">
-                    <img class="author-pic" src="/img/abc/eleven.net.cn.jpeg" height=300 width=300></img>
-                    <div class="span-wrapper">
-                        <a href="https://github.com/eleven-net-cn" target="_blank">
-                            <span class=" iconfont icon-github"></span>
-                            <span>eleven.net.cn</span>
-                        </a>
-                    </div>
-                    <p>人生没有重启键，一去不回头。</p>
-                    <!-- <span>人生没有重启键，一去不回头。</span> -->
-                    <!-- <dl>
-                        <dd><a href="https://github.com/eleven-net-cn" target="_blank"><span
-                                    class=" iconfont icon-github"></span></a></dd>
-                        <dd><a href="" target="_blank"><span
-                                    class=" iconfont icon-twitter"></span></a></dd>
-                        <dd><a href="" target="_blank"><span
-                                    class=" iconfont icon-stack-overflow"></span></a></dd>
-                    </dl> -->
-                </div>
-                <!-- <ul>
-                    <li><a href="/">9 <p>文章</p></a></li>
-                    <li><a href="/categories">7 <p>分类</p></a></li>
-                    <li><a href="/tags">7 <p>标签</p></a></li>
-                </ul> -->
-            </div>
-            
-            
-            
-            
-        </div>
-    </div>
-</div>
-
-    </div>
-</div>
     <div id="back-to-top" class="animated fadeIn faster">
         <div class="flow"></div>
         <span class="percentage animated fadeIn faster">0%</span>

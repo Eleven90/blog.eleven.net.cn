@@ -210,19 +210,19 @@
             六月 11, 2020
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2020/06/11/patch-packages/index/" title="自动修改 node_moduels 的包" class="posttitle">自动修改 node_moduels 的包</a></h3>
+            <a href="/2020/06/11/nodejs/patch-package/" title="自动修改 node_moduels 源码" class="posttitle">自动修改 node_moduels 源码</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                3.2k
+                2.5k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                3 mins.
+                2 mins.
             </span>
             
             
@@ -239,7 +239,7 @@
 </li>
 <li><p>自己在 node_modules 里直接修改源码？下一次重新安...</p></li></ol>
             
-            <span class="read-more"><a href="/2020/06/11/patch-packages/index/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2020/06/11/nodejs/patch-package/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -275,7 +275,7 @@
             
             五月 10, 2020
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2020/05/10/npm-publish/index/" title="NPM 包发布指南" class="posttitle">NPM 包发布指南</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2020/05/10/npm/publish/" title="NPM 包发布指南" class="posttitle">NPM 包发布指南</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
@@ -315,7 +315,58 @@
 <pre><code class="json">&#123;
   &quot...</code></pre>
             
-            <span class="read-more"><a href="/2020/05/10/npm-publish/index/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2020/05/10/npm/publish/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.2), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/NodeJS">
+                  <b>「 </b>NODEJS<b> 」</b>
+                </a>
+            
+            三月 12, 2020
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2020/03/12/nodejs/check-version/" title="Git Hook 提交时修改版本号" class="posttitle">Git Hook 提交时修改版本号</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        3.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>前端项目在 Git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……</p>
+<h4 id="编写一个简单的-node-脚本-check-version-js"><a href="#编写一个简单的-node-脚本-check-version-js" class="headerlink" title="编写一个简单的 node 脚本 check-version.js"></a>编写一个简单的 node 脚本 <code>check-version.js</code></h4><p>先安装几个依赖包 <code>yarn add inquirer chalk child_process -D</code></p>
+<pre><code class="js">// /scripts/check-version.js
+
+const inquirer = require(&#39;inquirer&#39;);
+const ...</code></pre>
+            
+            <span class="read-more"><a href="/2020/03/12/nodejs/check-version/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
