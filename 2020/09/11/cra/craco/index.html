@@ -102,7 +102,7 @@
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    18 mins.
+                    19 mins.
                 </span>
                 
                 
@@ -407,7 +407,10 @@ module.exports = &#123;
     ],
   &#125;
 &#125;</code></pre>
-<h3 id="扩展-react-hot-loader"><a href="#扩展-react-hot-loader" class="headerlink" title="扩展 react-hot-loader"></a>扩展 react-hot-loader</h3><p>常用的热更新方案 react-hot-loader，craco 提供了专门的 craco plugin（<a target="_blank" rel="noopener" href="https://github.com/HasanAyan/craco-plugin-react-hot-reload">传送门</a>），配置如下：</p>
+<h3 id="扩展-react-hot-loader"><a href="#扩展-react-hot-loader" class="headerlink" title="扩展 react-hot-loader"></a>扩展 react-hot-loader</h3><blockquote>
+<p>CRA v4.0 开始已经内置了 fast refresh —— <a target="_blank" rel="noopener" href="https://github.com/facebook/create-react-app/releases/tag/v4.0.0">https://github.com/facebook/create-react-app/releases/tag/v4.0.0</a> ，不必自己扩展 hot loader。</p>
+</blockquote>
+<p>常用的热更新方案 react-hot-loader，craco 提供了专门的 craco plugin（<a target="_blank" rel="noopener" href="https://github.com/HasanAyan/craco-plugin-react-hot-reload">传送门</a>），配置如下：</p>
 <pre><code class="sh">yarn add craco-plugin-react-hot-reload -D</code></pre>
 <pre><code class="js">/* craco.config.js */
 const &#123; whenDev, whenProd, when &#125; = require(&#39;@craco/craco&#39;)
@@ -446,7 +449,10 @@ import App from &#39;./App&#39;
 + const Root = isDev ? hot(module)(App) : App
 - ReactDOM.render(&lt;App /&gt;, document.getElementById(&#39;root&#39;))
 + ReactDOM.render(&lt;Root /&gt;, document.getElementById(&#39;root&#39;))</code></pre>
-<h3 id="比-react-hot-loader-更好的方案-craco-fast-refresh"><a href="#比-react-hot-loader-更好的方案-craco-fast-refresh" class="headerlink" title="比 react-hot-loader 更好的方案 craco-fast-refresh"></a>比 react-hot-loader 更好的方案 craco-fast-refresh</h3><p>这是最近发现的新 craco plugin，相对于 react-hot-loader 好用得多，零配置，不需要修改项目代码，据说性能也更好。</p>
+<h3 id="比-react-hot-loader-更好的方案-craco-fast-refresh"><a href="#比-react-hot-loader-更好的方案-craco-fast-refresh" class="headerlink" title="比 react-hot-loader 更好的方案 craco-fast-refresh"></a>比 react-hot-loader 更好的方案 craco-fast-refresh</h3><blockquote>
+<p>CRA v4.0 开始已经内置了 fast refresh —— <a target="_blank" rel="noopener" href="https://github.com/facebook/create-react-app/releases/tag/v4.0.0">https://github.com/facebook/create-react-app/releases/tag/v4.0.0</a> ，不必自己扩展 hot loader。</p>
+</blockquote>
+<p>这是最近发现的新 craco plugin，相对于 react-hot-loader 好用得多，零配置，不需要修改项目代码，据说性能也更好。</p>
 <pre><code class="sh">yarn add craco-fast-refresh -D</code></pre>
 <pre><code class="js">/* craco.config.js */
 const &#123; whenDev &#125; = require(&#39;@craco/craco&#39;)
