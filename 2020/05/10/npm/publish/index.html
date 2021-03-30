@@ -10,14 +10,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    <meta name="description" content="一、准备工作
+    <meta name="description" content="准备工作
 在 NPM 官网注册账号，https://www.npmjs.com
- 邮件验证的时候可能需要翻墙访问。
+邮件验证的时候可能需要翻墙访问。
 
 本机安装 nodejs
 
 推荐也安装一下 nrm，方便随时切换 npm 源
-,"> 
+sud,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven 的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/abc/eleven.net.cn.jpeg"> 
@@ -143,22 +143,22 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h4 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h4><ol>
+            <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
 <li><p>在 NPM 官网注册账号，<a target="_blank" rel="noopener" href="https://www.npmjs.com">https://www.npmjs.com</a></p>
-<p> 邮件验证的时候可能需要翻墙访问。</p>
+<p>邮件验证的时候可能需要翻墙访问。</p>
 </li>
 <li><p>本机安装 nodejs</p>
 </li>
 <li><p>推荐也安装一下 nrm，方便随时切换 npm 源</p>
-<pre><code class="sh"> sudo npm i nrm -g</code></pre>
-<p> nrm 常用命令</p>
-<pre><code class="sh"> nrm ls                  # 查看所有
- nrm use [目标源]         # 切换至目标源</code></pre>
+<pre><code class="sh">sudo npm i nrm -g</code></pre>
+<p>nrm 常用命令</p>
+<pre><code class="sh">nrm ls                  # 查看所有
+nrm use [目标源]         # 切换至目标源</code></pre>
 </li>
 </ol>
-<h4 id="二、package-json-文件"><a href="#二、package-json-文件" class="headerlink" title="二、package.json 文件"></a>二、package.json 文件</h4><p>包的<strong>根目录</strong>需要有一个 package.json 文件，可以通过 <code>npm init</code> 命令去创建，示例如下：</p>
+<h2 id="package-json-文件"><a href="#package-json-文件" class="headerlink" title="package.json 文件"></a>package.json 文件</h2><p>包的<strong>根目录</strong>需要有一个 package.json 文件，可以通过 <code>npm init</code> 命令去创建，示例如下：</p>
 <pre><code class="json">&#123;
-  &quot;name&quot;: &quot;@eleven.xi/reset.css&quot;,
+  &quot;name&quot;: &quot;@eleven.fe/reset.css&quot;,
   &quot;version&quot;: &quot;1.0.6&quot;,
   &quot;description&quot;: &quot;H5 网页 reset 方案，PC&amp;mobile&quot;,
   &quot;main&quot;: &quot;lib/reset.css&quot;,
@@ -167,30 +167,25 @@
   &#125;,
   &quot;repository&quot;: &#123;
     &quot;type&quot;: &quot;git&quot;,
-    &quot;url&quot;: &quot;git+https://github.com/Eleven90/reset.css.git&quot;
+    &quot;url&quot;: &quot;git+https://github.com/eleven-net-cn/reset.css.git&quot;
   &#125;,
-  &quot;keywords&quot;: [
-    &quot;reset.css&quot;
-  ],
+  &quot;keywords&quot;: [&quot;reset.css&quot;],
   &quot;author&quot;: &quot;Eleven&quot;,
   &quot;license&quot;: &quot;ISC&quot;,
   &quot;bugs&quot;: &#123;
-    &quot;url&quot;: &quot;https://github.com/Eleven90/reset.css/issues&quot;
+    &quot;url&quot;: &quot;https://github.com/eleven-net-cn/reset.css/issues&quot;
   &#125;,
-  &quot;homepage&quot;: &quot;https://github.com/Eleven90/reset.css#readme&quot;,
+  &quot;homepage&quot;: &quot;https://github.com/eleven-net-cn/reset.css#readme&quot;,
   &quot;files&quot;: [&quot;lib&quot;, &quot;ReadMe.md&quot;]
 &#125;</code></pre>
-<p><strong>文件中重点注意以下几项：</strong></p>
+<p><strong>重点注意以下几项：</strong></p>
 <ol>
 <li><p>main：指定包的入口文件</p>
 </li>
 <li><p>name：指定包名</p>
 <ul>
-<li><p>发布之前都要去<a target="_blank" rel="noopener" href="https://www.npmjs.com">NPM 官网</a>上搜索一遍，确认想要使用的包名，是否已经被占用。</p>
-</li>
-<li><p>包名支持 [@scope]/[package name] 的形式，[@scope] 类似于命名空间的作用，NPM 默认允许你使用自己注册的用户名，或者在自己的账户下申请的 organizations。</p>
-<p>  典型的例子，如 Babel，插件原先使用的是 babel-plugin-xxx 的格式命名，后来因为许多个人发布的包和官方的包命名格式一样，导致难以区分，现在 babel 官方所有的包都更换成了 @babel/xxx 的格式。</p>
-</li>
+<li>发布之前都要去<a target="_blank" rel="noopener" href="https://www.npmjs.com">NPM 官网</a>上搜索一遍，确认想要使用的包名，是否已经被占用。</li>
+<li>包名支持 [@scope]/[package name] 的形式，[@scope] 类似于命名空间的作用，NPM 默认允许你使用自己注册的用户名，或者在自己的账户下申请的 organizations。<br>典型的例子，如 Babel，插件原先使用的是 babel-plugin-xxx 的格式命名，后来因为许多个人发布的包和官方的包命名格式一样，导致难以区分，现在 babel 官方所有的包都更换成了 @babel/xxx 的格式。</li>
 </ul>
 </li>
 <li><p>version：包的版本</p>
@@ -210,7 +205,7 @@
 <li><p>可以在包的根目录下新建文件 <code>.npmignore</code>，指定哪些文件不被发布，书写格式与 <code>.gitignore</code> 文件一致。</p>
 </li>
 </ul>
-<ol start="6">
+</li>
 <li><p>license：协议，推荐阅读了解几种开源的协议：</p>
 <ul>
 <li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/86251523e898">七种开源许可证</a></p>
@@ -219,72 +214,71 @@
 </li>
 </ul>
 </li>
-<li><p>description、repository、author、bugs、homepage 等项，通常也推荐填写完整，详细的 package.json 每一项的含义，推荐阅读这一篇：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengxiuchen86/article/details/81285030">npm package.json属性详解</a> 。</p>
+<li><p>description、repository、author、bugs、homepage 等项，通常也推荐填写完整，详细的 package.json 每一项的含义，推荐阅读这一篇：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengxiuchen86/article/details/81285030">npm package.json 属性详解</a> 。</p>
 </li>
 </ol>
-</li>
-</ol>
-<h4 id="三、待发布的包结构"><a href="#三、待发布的包结构" class="headerlink" title="三、待发布的包结构"></a>三、待发布的包结构</h4><ol>
+<h2 id="待发布的包结构"><a href="#待发布的包结构" class="headerlink" title="待发布的包结构"></a>待发布的包结构</h2><ol>
 <li><p>移除不必要的代码</p>
-<p> 发布出去的包，一般只需要包含用户使用时必须要 <code>install</code> 下载的文件即可，例如一些构建脚本等无关的代码文件，不必发布出去。</p>
-<p> 例如：你有一个开源项目，同时，该项目也提供了包供开发者使用，最佳方式应该是将该项目源码推送到 GitHub 上开源，而发布到 NPM 仓库的包，尽量不要把项目源码目录、构建脚本等非必要的文件发布到 NPM 仓库，会增大包的体积，导致安装时间变长。</p>
+<p>发布出去的包，一般只需要包含用户使用时必须要 <code>install</code> 下载的文件即可，例如一些构建脚本等无关的代码文件，不必发布出去。</p>
+<p>例如：你有一个开源项目，同时，该项目也提供了包供开发者使用，最佳方式应该是将该项目源码推送到 GitHub 上开源，而发布到 NPM 仓库的包，尽量不要把项目源码目录、构建脚本等非必要的文件发布到 NPM 仓库，会增大包的体积，导致安装时间变长。</p>
 </li>
 <li><p>发布的包尽量要做好语法转译，否则要在文档中说明，提醒使用者自己完成。</p>
 </li>
 <li><p>保护隐私</p>
-<p> 如果待发布的包，并非开源项目，而仅仅是为了提供开发者 NPM 安装、使用，一定要做好隐私保护工作，防止源码、隐私的文档等隐秘信息被发布到 NPM 仓库。可以选用的方法如下：</p>
+<p>如果待发布的包，并非开源项目，而仅仅是为了提供开发者 NPM 安装、使用，一定要做好隐私保护工作，防止源码、隐私的文档等隐秘信息被发布到 NPM 仓库。</p>
+<p>可以选用的方法如下：</p>
 <ol>
 <li><p><code>.gitignore</code> 设置忽略哪些文件</p>
-<p>   .gitignore 设置的忽略文件，在 git 代码管理和 npm publish 都会被忽略。</p>
+<p>.gitignore 设置的忽略文件，在 git 代码管理和 npm publish 都会被忽略。</p>
 </li>
 <li><p>.npmignore 设置忽略哪些文件</p>
-<p>   .npmignore 优先级更高，如果同时使用了 .npmignore 和 .gitignore，只有 .npmignore 会生效。</p>
+<p>.npmignore 优先级更高，如果同时使用了 .npmignore 和 .gitignore，只有 .npmignore 会生效。</p>
 </li>
 <li><p>package.json 文件的 files 字段</p>
-<p>   直接在 package.json 文件中配置 <code>files</code>，指定发布哪些文件、目录，优先级高于 .npmignore 和 .gitignore。</p>
+<p>直接在 package.json 文件中配置 <code>files</code>，指定发布哪些文件、目录，优先级高于 .npmignore 和 .gitignore。</p>
 </li>
 </ol>
 </li>
 <li><p>以下文件、目录在发布时，默认会被忽略</p>
-<pre><code class="txt"> .*.swp
- ._*
- .DS_Store
- .git
- .hg
- .npmrc
- .lock-wscript
- .svn
- .wafpickle-*
- config.gypi
- CVS
- npm-debug.log
- node_modules/</code></pre>
+<pre><code class="txt">.*.swp
+._*
+.DS_Store
+.git
+.hg
+.npmrc
+.lock-wscript
+.svn
+.wafpickle-*
+config.gypi
+CVS
+npm-debug.log
+node_modules/</code></pre>
 </li>
 <li><p>以下文件、目录在发布时，默认会被包含，无法忽略掉</p>
-<pre><code class="txt"> package.json
- README (and its variants)
- CHANGELOG (and its variants)
- LICENSE / LICENCE</code></pre>
+<pre><code class="txt">package.json
+README (and its variants)
+CHANGELOG (and its variants)
+LICENSE / LICENCE</code></pre>
 </li>
 </ol>
-<h4 id="四、发布"><a href="#四、发布" class="headerlink" title="四、发布"></a>四、发布</h4><ol>
+<h2 id="正式发布"><a href="#正式发布" class="headerlink" title="正式发布"></a>正式发布</h2><ol>
 <li><p>登录 NPM 账号</p>
 <ol>
 <li><p>在终端运行命令，填写账号、密码及邮箱。</p>
-<pre><code class="sh"> npm adduser / npm login</code></pre>
+<pre><code class="sh">npm adduser / npm login</code></pre>
 </li>
 <li><p>查看是否登录上了？</p>
-<pre><code class="sh"> npm who am i</code></pre>
+<pre><code class="sh">npm who am i</code></pre>
 </li>
 <li><p>通常只有一个人可以发布，也可以添加多人，相关命令如下：</p>
-<pre><code class="sh"> npm owner ls &lt;package name&gt;             # 查看
- npm owner add &lt;user&gt; &lt;package name&gt;     # 添加
- npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
+<pre><code class="sh">npm owner ls &lt;package name&gt;             # 查看
+npm owner add &lt;user&gt; &lt;package name&gt;     # 添加
+npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
 </li>
 </ol>
 </li>
 <li><p>发布</p>
-<pre><code class="sh"> npm publish . --access=public</code></pre>
+<pre><code class="sh">npm publish . --access=public</code></pre>
 <ol>
 <li><p>这里注意一下发布命令中的点 <code>.</code> ，如果不带 <code>.</code> ，偶尔碰到发布会出错。</p>
 </li>
@@ -294,25 +288,21 @@
 </li>
 </ol>
 </li>
-<li><p>撤回已发布的版本</p>
-<pre><code class="sh"> npm unpublish -f &lt;package name&gt;@&lt;package version&gt;</code></pre>
+</ol>
+<h2 id="撤回已发布的版本"><a href="#撤回已发布的版本" class="headerlink" title="撤回已发布的版本"></a>撤回已发布的版本</h2><pre><code class="sh">npm unpublish -f &lt;package name&gt;@&lt;package version&gt;</code></pre>
 <ol>
 <li><p>包发布后的 72 小时内，可以撤回。</p>
 </li>
 <li><p>已撤回的版本，该版本号就不能再重新发布了，因为在 NPM 的仓库中已经有了记录。</p>
 </li>
 </ol>
-</li>
-<li><p>其它问题</p>
-<ol>
+<h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><ol>
 <li><p>偶尔可能会看到如下错误:</p>
-<pre><code class="sh"> no_perms Private mode enable, only admin can publish this module</code></pre>
-<p> 解决办法：</p>
-<pre><code class="sh"> npm config set registry http://registry.npmjs.org</code></pre>
+<pre><code class="sh">no_perms Private mode enable, only admin can publish this module</code></pre>
+<p>解决办法：</p>
+<pre><code class="sh">npm config set registry http://registry.npmjs.org</code></pre>
 </li>
 <li><p>NPM 官方提供了发布的指导：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/misc/developers">https://docs.npmjs.com/misc/developers</a> ，如果遇到一些奇怪的问题，建议前往阅读。</p>
-</li>
-</ol>
 </li>
 </ol>
 
@@ -389,6 +379,13 @@
             </div>
             
             
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#package-json-%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">package.json 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%85%E5%8F%91%E5%B8%83%E7%9A%84%E5%8C%85%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">待发布的包结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83"><span class="toc-number">4.</span> <span class="toc-text">正式发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%92%A4%E5%9B%9E%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E7%89%88%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">撤回已发布的版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">其它问题</span></a></li></ol>
+                </div>
+            </div>
             
             
         </div>
