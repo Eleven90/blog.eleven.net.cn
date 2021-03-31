@@ -113,10 +113,9 @@ sud,">
                 </span>
                 
                 
-                
-                <span id="busuanzi_container_page_pv">
+                <span id="/2020/05/10/npm/publish/" class="leancloud_visitors" data-flag-title="NPM 包发布指南">
                     <b class="iconfont icon-read"></b> <i>阅读次数</i>
-                    <span id="busuanzi_value_page_pv">--</span>
+                    <span class="leancloud-visitors-count">--</span>
                 </span>
                 
             </p>
@@ -348,7 +347,6 @@ npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
 
 
             
-            
         </div>
         <div class="sidebar">
             <div class="box animated fadeInRight">
@@ -516,16 +514,6 @@ npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
 <script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
  
-<script src="/js/busuanzi.min.js"></script>
-
-<script>
-  $(document).ready(function () {
-    if ($('span[id^="busuanzi_"]').length) {
-      initialBusuanzi();
-    }
-  });
-</script>
- 
 <link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
 <link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
 
@@ -616,6 +604,38 @@ npm owner rm &lt;user&gt; &lt;package name&gt;      # 删除</code></pre>
   }
 </script>
 
+ 
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var valine = new Valine();
+
+  function initValine(path) {
+    if (!path) path = window.location.pathname;
+    let language = 'zh-CN';
+    if (!language) {
+      language = 'en';
+    } else {
+      language = language.toLowerCase();
+    }
+    valine.init({
+      el: '#vcomments',
+      appId: 'hkm8dtO9l1LGafjtOfx8tvBd-gzGzoHsz',
+      appKey: 'UOfcRu89reXtwqeIXPzpMYMj',
+      notify: 'true',
+      verify: 'false',
+      avatar: 'mp',
+      placeholder: '输入评论...',
+      visitor: 'true',
+      path: path,
+      lang: language,
+    });
+  }
+
+  $(document).ready(function () {
+    initValine();
+  });
+</script>
 
 
 

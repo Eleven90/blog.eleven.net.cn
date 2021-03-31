@@ -255,12 +255,17 @@
         1 mins.
       </span>
        
-      
-      <span id="busuanzi_container_page_pv">
-          <b class="iconfont icon-read"></b> <i>阅读次数</i>
-          <span id="busuanzi_value_page_pv">--</span>
+      <span
+        id="/2020/06/11/nodejs/circular-deps/"
+        class="leancloud_visitors"
+        data-flag-title=""
+      >
+        <b class="iconfont icon-read"></b> <i>阅读次数</i>
+        <span class="leancloud-visitors-count">--</span>
       </span>
       
+      <!-- 是统计网站总的访问量，而非某篇文章 -->
+      <!--  -->
     </p>
       <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li></ul> 
     <div class="md-content animated fadeIn">
@@ -321,11 +326,10 @@
                     </span>
                 
                 
-                
-                <span id="busuanzi_container_page_pv">
-                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
-                    <span id="busuanzi_value_page_pv">--</span>
-                </span>
+                    <span id="/2020/03/12/nodejs/check-version/" class="leancloud_visitors" data-flag-title="">
+                        <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                        <span class="leancloud-visitors-count">--</span>
+                    </span>
                 
             </p>
             
@@ -478,16 +482,6 @@ const ...</code></pre>
 <script src="/codemirror-5.60.0/mode/python/python.js"></script>
   
  
-<script src="/js/busuanzi.min.js"></script>
-
-<script>
-  $(document).ready(function () {
-    if ($('span[id^="busuanzi_"]').length) {
-      initialBusuanzi();
-    }
-  });
-</script>
- 
 <link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
 <link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
 
@@ -578,6 +572,38 @@ const ...</code></pre>
   }
 </script>
 
+ 
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var valine = new Valine();
+
+  function initValine(path) {
+    if (!path) path = window.location.pathname;
+    let language = 'zh-CN';
+    if (!language) {
+      language = 'en';
+    } else {
+      language = language.toLowerCase();
+    }
+    valine.init({
+      el: '#vcomments',
+      appId: 'hkm8dtO9l1LGafjtOfx8tvBd-gzGzoHsz',
+      appKey: 'UOfcRu89reXtwqeIXPzpMYMj',
+      notify: 'true',
+      verify: 'false',
+      avatar: 'mp',
+      placeholder: '输入评论...',
+      visitor: 'true',
+      path: path,
+      lang: language,
+    });
+  }
+
+  $(document).ready(function () {
+    initValine();
+  });
+</script>
 
 
 
