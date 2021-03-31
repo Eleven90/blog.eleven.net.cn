@@ -1324,10 +1324,13 @@ $(function () {
     var $searchBox = $('.search-box');
     var $searchBoxDisplay = $('.search-box').css('display');
     var $inputSearch = $('#local-search-input');
+    var $container = $('#container');
+    var isHiddenContainer = $container.is(':hidden');
 
     // 唤起搜索
-    if(validShowSearchBox) {
+    if(validShowSearchBox && $inputSearch.length && $container.length && !isHiddenContainer) {
       if ($searchBoxDisplay != 'block') {
+        $('#container').show();
         $('body').addClass('fixed');
         $searchBox.fadeIn(400);
         $inputSearch.focus();
