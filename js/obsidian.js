@@ -1023,11 +1023,14 @@ $(function () {
 
     window.addEventListener('scroll', handler, false);
   })($);
+
   $(window).on('touchmove', function (e) {
     if ($('body').hasClass('mu')) {
       e.preventDefault();
     }
   });
+
+  // 事件委托，注册各种事件
   $('body').on('click', function (e) {
     var tag = $(e.target).attr('class') || '',
       rel = $(e.target).attr('rel') || '',
@@ -1294,21 +1297,50 @@ $(function () {
         $('.category-mask').fadeOut(500);
         return false;
       case tag.indexOf('search-bar') != -1 || tag.indexOf('search-box-close') != -1:
-        var searchBox = $('.search-box'),
-          searchBoxDisplay = $('.search-box').css('display');
+        var $searchBox = $('.search-box');
+        var $searchBoxDisplay = $('.search-box').css('display');
+        var $inputSearch = $('#local-search-input');
 
-        if (searchBoxDisplay != 'block') {
+        if ($searchBoxDisplay != 'block') {
           $('body').addClass('fixed');
-          searchBox.fadeIn(400);
+          $searchBox.fadeIn(400);
+          $inputSearch.focus();
         } else {
           $('body').removeClass('fixed');
-          searchBox.fadeOut(400);
+          $searchBox.fadeOut(400);
         }
         return false;
       default:
         return true;
     }
   });
+
+  // 全局唤起搜索
+  $(document).on('keydown', function(event) {
+    // ctrl + K 或 meta + K
+    var validShowSearchBox = event.keyCode === 75 && (event.ctrlKey || event.metaKey);
+    var validEsc = event.keyCode === 27;
+
+    var $searchBox = $('.search-box');
+    var $searchBoxDisplay = $('.search-box').css('display');
+    var $inputSearch = $('#local-search-input');
+
+    // 唤起搜索
+    if(validShowSearchBox) {
+      if ($searchBoxDisplay != 'block') {
+        $('body').addClass('fixed');
+        $searchBox.fadeIn(400);
+        $inputSearch.focus();
+        getSearchFile();
+      }
+    }
+
+    // 关闭搜索
+    if(validEsc) {
+      $('body').removeClass('fixed');
+      $searchBox.fadeOut(400);
+    }
+  })
 
   // 是否自动展开评论
   comment = $('#gitalk-container');
@@ -1333,10 +1365,11 @@ $(function () {
   utiliseBgColor();
   initialTyped();
   Obsidian.setCodeRowWithLang();
+
   console.log(
-    '%c Github %c',
+    '%c GitHub %c',
     'background:#24272A; color:#73ddd7',
     '',
-    'https://github.com/TriDiamond/hexo-theme-obsidian'
+    'eleven-net-cn: https://github.com/eleven-net-cn'
   );
 });
