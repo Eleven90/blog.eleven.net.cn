@@ -328,9 +328,10 @@ var Obsidian = {
   initArticleJs: function () {
     Obsidian.setCodeRowWithLang();
     Obsidian.tocSpy(200);
-    if ($('#vcomments').length) {
-      initValine();
-    }
+    // if ($('#vcomments').length) {
+    //   initValine();
+    // }
+    initValine();
     if ($('span[id^="busuanzi_"]').length) {
       initialBusuanzi();
     }
@@ -1109,9 +1110,10 @@ $(function () {
               if(typeof hljs !== 'undefined') hljs.highlightBlock(block);
             });
             Obsidian.setCodeRowWithLang();
-            if ($('#vcomments').length) {
-              initValine();
-            }
+            // if ($('#vcomments').length) {
+            //   initValine();
+            // }
+            initValine();
           },
           function () {
             tag.html(tag.attr('data-load-more')).data('status', 'loaded');
