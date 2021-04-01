@@ -949,7 +949,7 @@ $(function () {
           header.style.background = 'transparent';
           header.style.borderBottom = '0px';
           header.style.boxShadow = 'none';
-          if (!logoImg.classList.contains('spin')) {
+          if (!(logoImg && logoImg.classList.contains('spin'))) {
             logoImg.classList.add('spin');
             setTimeout(function () {
               logoImg.classList.remove('spin');
