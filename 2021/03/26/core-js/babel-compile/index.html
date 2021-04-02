@@ -97,7 +97,7 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    962
+                    915
                 </span>
                 
                 
@@ -139,7 +139,7 @@
             <p>一个不太常见，但很重要的 core-js bug 讨论：<a target="_blank" rel="noopener" href="https://github.com/zloirock/core-js/issues/514">https://github.com/zloirock/core-js/issues/514</a></p>
 <h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>core-js 是 es3 的代码，应当是不需要 babel 编译的，但是，因为某种原因（暂不清楚），babel 会对 core-js 进行处理，并且会影响其中的代码，进而会发现 Symbol 在 Android 6.0 等低版本浏览器的兼容性出问题。</p>
 <p>在移动端页面，小伙伴实际遭遇到了这种现象，依赖的第三方包使用了 Symbol 语法，即使引入全量的 core-js，依然无法解决兼容性报错问题，最终小伙伴追踪到了上方的 github issues。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>暂时需要手动将 core-js 添加到 babel 的 exclude 配置中，显示指定 babel 不要去处理它。日常也可能会使用 react-app-polyfill，一并声明不做处理。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>暂时需要手动将 core-js 添加到 <code>babel-loader</code> 的 <code>exclude</code> 配置中，指定 babel 不要去处理它。</p>
 <pre><code class="js">/**
  * Babel 编译时，会处理 core-js（未来可能会被修复），
  * 导致 polyfill 内部代码发生了变化，产生一些微小的影响，如 Symbol 问题。
@@ -149,7 +149,6 @@
  */
 exclude: [
   /node_modules[\\/]core-js/,
-  /node_modules[\\/]react-app-polyfill/,
 ],</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
