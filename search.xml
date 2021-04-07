@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title>Git 常见问题</title>
+      <link href="/2021/04/07/git/questions/"/>
+      <url>/2021/04/07/git/questions/</url>
+      
+        <content type="html"><![CDATA[<p>Git 遇到的各类怪异问题，集中收集。</p><h2 id="提示-hosts-问题"><a href="#提示-hosts-问题" class="headerlink" title="提示 hosts 问题"></a>提示 hosts 问题</h2><pre><code class="zsh">Warning:Permanently added the RSA host key for IP address &#39;13.229.188.59&#39; to the list of known hosts.</code></pre><p>遇到这种提示，多半是因为新机器刚配置的 git，或者常用的远程仓库更换了域名、IP 等。</p><p>可以将对应的域名、IP 配置进去，例如，将 github.com 添加进去，示例：</p><pre><code class="zsh">vi /etc/hostsinsert 13.229.188.59 github.com</code></pre><p>或者，删除 host 校验</p><pre><code class="zsh">rm -rf ~/.ssh/known_hosts # 删除后重新操作即可</code></pre><h2 id="Enter-passphrase-for-key-每次都需要输入密码"><a href="#Enter-passphrase-for-key-每次都需要输入密码" class="headerlink" title="Enter passphrase for key 每次都需要输入密码"></a>Enter passphrase for key 每次都需要输入密码</h2><pre><code class="zsh">ssh-add ~/.ssh/id_rsa</code></pre><h2 id="设置某文件、目录不被跟踪"><a href="#设置某文件、目录不被跟踪" class="headerlink" title="设置某文件、目录不被跟踪"></a>设置某文件、目录不被跟踪</h2><pre><code class="zsh">git update-index --assume-unchanged &lt;PATH&gt;</code></pre><p>对应的，允许某文件、目录被跟踪</p><pre><code class="zsh">git update-index --no-assume-unchanged &lt;PATH&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>yarn workspaces 依赖安装报错</title>
+      <link href="/2021/04/07/yarn/workspaces-version/"/>
+      <url>/2021/04/07/yarn/workspaces-version/</url>
+      
+        <content type="html"><![CDATA[<p>yarn workspaces 结构的项目，在执行命令安装子包依赖时，可能会看到如下错误：</p><pre><code class="zsh">Failed to install dependencies in workspace: expected workspace package to exist</code></pre><p>yarn issues 下的相关问题讨论：<a href="https://github.com/yarnpkg/yarn/issues/7807">https://github.com/yarnpkg/yarn/issues/7807</a></p><p>目前比较简单的处理办法是降级 yarn 到 v1.18.0</p><pre><code class="zsh">yarn policies set-version 1.18.0</code></pre><p>后续还需要等待 yarn 官方来解决此问题。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Yarn </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Yarn </tag>
+            
+            <tag> Yarn Workspaces </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>「转」H5直播流原理与实践方案</title>
       <link href="/2021/03/28/video/live/"/>
       <url>/2021/03/28/video/live/</url>
