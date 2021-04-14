@@ -60,7 +60,7 @@
                 <div class="content animated fadeIn">
                     <div class="set">
                         <h1 style="text-align: center">时光轴</h1>
-                        <p style="text-align: center">「 12 」</p>
+                        <p style="text-align: center">「发表了 14 篇文章」</p>
                         <ul class="timeline timeline-centered">
                             
                             
@@ -75,16 +75,38 @@
                                 
                                 <li class="timeline-item">
                                     <div class="timeline-info">
+                                        <span class="gradient-text">四月 14, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/04/14/mac/command/">Apple M1 问题汇总</a>
+                                        <p>
+                                            
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
                                         <span class="gradient-text">四月 07, 2021</span>
                                     </div>
                                     <div class="timeline-marker"></div>
                                     <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/04/07/git/questions/">Git 常见问题</a>
+                                        <a class="timeline-title" target="_self" href="/2021/04/07/git/questions/">Git 非常规问题记录</a>
                                         <p>
                                             Git 遇到的各类怪异问题，集中收集。
-提示 hosts 问题Warning:Permanently added the RSA host key for IP address &#39;13.229.188.59&#39; to the list of known hosts.
-遇到这种提示，多半是因为新机器刚配置的 git，或者常用的远程仓库更换了域名、IP 等。
-可以将对应的域名、IP...
+与 fork 的上游仓库保持同步一般有 3 种办法可用：
+
+命令行同步（安全，推荐）
+
+git remote -v
+# 将上游仓库添加进来
+git remote add upstream git@github.com:xxx/xxx.git
+# 拉取更新
+git fetch upstream
+# 合并过来
+git merge upstream/mast...
                                         </p>
                                     </div>
                                 </li>
@@ -343,6 +365,31 @@ package.js...
                                             前端项目在 Git 提交时，往往会遗忘更新项目根目录的 package.json 文件的 version，通常不修改也不会有啥问题，但对于强迫症来说，不能忍！咱要改掉它……
 编写一个简单的 node 脚本 check-version.js先安装几个依赖包 yarn add inquirer chalk child_process -D
 // /scripts/check-version.js...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">三月 02, 2020</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2020/03/02/git/command/">Git 命令清单</a>
+                                        <p>
+                                            Git 常用命令做一波整理，方便随时查阅。
+
+主要内容出自阮一峰大佬的科普文章：http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html 。
+
+几个专用名词的译名如下：
+
+Workspace：工作区
+Index / Stage：暂存区
+Repository：仓库区（或本地仓库）
+Remote：远程仓库
+
+一、新建代码库# 在当前目...
                                         </p>
                                     </div>
                                 </li>

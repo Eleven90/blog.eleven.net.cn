@@ -5,13 +5,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Git 常见问题 - Eleven 的博客</title>
+    <title>Git 非常规问题记录 - Eleven 的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
     <meta name="description" content="Git 遇到的各类怪异问题，集中收集。
-提示 hosts 问题Warning:Permanently added the RSA host key for IP address &amp;#39;13.22,"> 
+与 fork 的上游仓库保持同步一般有 3 种办法可用：
+
+命令行同步（安全，推荐）
+
+git remote -v
+# 将上游仓库添加进来
+git remot,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven 的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/abc/eleven.net.cn.jpeg"> 
@@ -58,7 +64,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/abc/eleven.net.cn.jpeg" alt="" data-url="https://blog.eleven.net.cn">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">Git 常见问题</h3>
+        <h3 class="subtitle">Git 非常规问题记录</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -90,24 +96,24 @@
                 
                 四月 07, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/04/07/git/questions/" title="Git 常见问题" class="">Git 常见问题</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/04/07/git/questions/" title="Git 非常规问题记录" class="">Git 非常规问题记录</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    1.1k
+                    1.8k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    1 mins.
+                    2 mins.
                 </span>
                 
                 
-                <span id="/2021/04/07/git/questions/" class="leancloud_visitors" data-flag-title="Git 常见问题">
+                <span id="/2021/04/07/git/questions/" class="leancloud_visitors" data-flag-title="Git 非常规问题记录">
                     <b class="iconfont icon-read"></b> <i>阅读次数</i>
                     <span class="leancloud-visitors-count">--</span>
                 </span>
@@ -137,6 +143,26 @@
     <div class='main'>
         <div class="content markdown animated fadeIn">
             <p>Git 遇到的各类怪异问题，集中收集。</p>
+<h2 id="与-fork-的上游仓库保持同步"><a href="#与-fork-的上游仓库保持同步" class="headerlink" title="与 fork 的上游仓库保持同步"></a>与 fork 的上游仓库保持同步</h2><p>一般有 3 种办法可用：</p>
+<ol>
+<li>命令行同步（安全，推荐）</li>
+</ol>
+<pre><code class="zsh">git remote -v
+# 将上游仓库添加进来
+git remote add upstream git@github.com:xxx/xxx.git
+# 拉取更新
+git fetch upstream
+# 合并过来
+git merge upstream/master
+git push origin master</code></pre>
+<p>若干可以注意的地方，如下图：</p>
+<p><img src="/imgs/git_fetch_fork_repo.png" alt=""></p>
+<ol start="2">
+<li><p>借助第三方库：<a target="_blank" rel="noopener" href="https://github.com/wei/pull">https://github.com/wei/pull</a>  (如果自己有修改，会被覆盖。所以，比较适合仅参与 PR 的项目同步)</p>
+</li>
+<li><p>借助机器人程序 Backstroke：<a target="_blank" rel="noopener" href="https://github.com/backstrokeapp/server">https://github.com/backstrokeapp/server</a></p>
+</li>
+</ol>
 <h2 id="提示-hosts-问题"><a href="#提示-hosts-问题" class="headerlink" title="提示 hosts 问题"></a>提示 hosts 问题</h2><pre><code class="zsh">Warning:Permanently added the RSA host key for IP address &#39;13.229.188.59&#39; to the list of known hosts.</code></pre>
 <p>遇到这种提示，多半是因为新机器刚配置的 git，或者常用的远程仓库更换了域名、IP 等。</p>
 <p>可以将对应的域名、IP 配置进去，例如，将 github.com 添加进去，示例：</p>
@@ -166,6 +192,10 @@ insert 13.229.188.59 github.com</code></pre>
             
             <div class="post-nav">
                 <hr>
+                
+                    <div class="post-nav-item">上一篇：<a href="/2021/04/14/mac/command/" rel="prev" 
+                        title="Apple M1 问题汇总">Apple M1 问题汇总
+                      </a></div>
                 
                 
                     <div class="post-nav-item">下一篇：<a href="/2021/04/07/yarn/workspaces-version/" rel="next" 
@@ -210,9 +240,9 @@ insert 13.229.188.59 github.com</code></pre>
                     </dl> -->
                 </div>
                 <ul>
-                    <li><a href="/">12 <p>文章</p></a></li>
-                    <li><a href="/categories">8 <p>分类</p></a></li>
-                    <li><a href="/tags">13 <p>标签</p></a></li>
+                    <li><a href="/">14 <p>文章</p></a></li>
+                    <li><a href="/categories">9 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
                 </ul>
             </div>
             
@@ -221,7 +251,7 @@ insert 13.229.188.59 github.com</code></pre>
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA-hosts-%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">提示 hosts 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enter-passphrase-for-key-%E6%AF%8F%E6%AC%A1%E9%83%BD%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">Enter passphrase for key 每次都需要输入密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%9F%90%E6%96%87%E4%BB%B6%E3%80%81%E7%9B%AE%E5%BD%95%E4%B8%8D%E8%A2%AB%E8%B7%9F%E8%B8%AA"><span class="toc-number">3.</span> <span class="toc-text">设置某文件、目录不被跟踪</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E-fork-%E7%9A%84%E4%B8%8A%E6%B8%B8%E4%BB%93%E5%BA%93%E4%BF%9D%E6%8C%81%E5%90%8C%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">与 fork 的上游仓库保持同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA-hosts-%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">提示 hosts 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enter-passphrase-for-key-%E6%AF%8F%E6%AC%A1%E9%83%BD%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">Enter passphrase for key 每次都需要输入密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%9F%90%E6%96%87%E4%BB%B6%E3%80%81%E7%9B%AE%E5%BD%95%E4%B8%8D%E8%A2%AB%E8%B7%9F%E8%B8%AA"><span class="toc-number">4.</span> <span class="toc-text">设置某文件、目录不被跟踪</span></a></li></ol>
                 </div>
             </div>
             

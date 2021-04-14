@@ -240,20 +240,20 @@
        四月 07, 2021
     </p>
     <h3 class="post-title animated fadeInDown">
-      <a href="/2021/04/07/git/questions/" title="Git 常见问题" class="posttitle">Git 常见问题</a>
+      <a href="/2021/04/07/git/questions/" title="Git 非常规问题记录" class="posttitle">Git 非常规问题记录</a>
     </h3>
     
     <p class="post-count animated fadeInDown">
       
       <span>
         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-        1.1k
+        1.8k
       </span>
        
       
       <span>
         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-        1 mins.
+        2 mins.
       </span>
        
       <!-- 
@@ -272,10 +272,16 @@
       <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul> 
     <div class="md-content animated fadeIn">
        <p>Git 遇到的各类怪异问题，集中收集。</p>
-<pre><code class="zsh">Warning:Permanently added the RSA host key for IP address &#39;13.229.188.59&#39...</code></pre> 
+<p>一般有 3 种办法可用：</p>
+<ol>
+<li>命令行同步（安全，推荐）</li>
+</ol>
+<pre><code class="zsh">git remote -v
+# 将上游仓库添加进来
+git remote add upstream git...</code></pre> 
       <span class="read-more">
         
-        <a href="/2021/04/07/git/questions/" title="Git 常见问题" class="posttitle">查看全文</a>
+        <a href="/2021/04/07/git/questions/" title="Git 非常规问题记录" class="posttitle">查看全文</a>
         <b class="iconfont icon-arrow-right- gradient-text"></b
       ></span>
     </div>
@@ -408,6 +414,76 @@ const ...</code></pre>
             <span class="read-more">
                 
                 <a href="/2020/03/12/nodejs/check-version/" title="Git Hook 提交时修改版本号" class="posttitle">查看全文</a>
+                <b class="iconfont icon-arrow-right- gradient-text"></b>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.2), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/Git">
+                  <b>「 </b>GIT<b> 」</b>
+                </a>
+            
+            三月 02, 2020
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2020/03/02/git/command/" title="Git 命令清单" class="posttitle">Git 命令清单</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        8.9k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        8 mins.
+                    </span>
+                
+                <!-- 
+                    <span id="/2020/03/02/git/command/" class="leancloud_visitors" data-flag-title="">
+                        <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                        <span class="leancloud-visitors-count">--</span>
+                    </span>
+                 -->
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>Git 常用命令做一波整理，方便随时查阅。</p>
+<blockquote>
+<p>主要内容出自阮一峰大佬的科普文章：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html</a> 。</p>
+</blockquote>
+<p>几个专用名词的译名如下：</p>
+<ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：仓库区（或本地仓库）</li>
+<li>Remote：远程仓库</li>
+</ul>
+<pre><code class="zsh"># 在当前目录新建一个 Git 代码库
+$ git init
+
+# 新建一个目录，将其初始化为 Git 代码库
+$ git init ...</code></pre>
+            
+            <span class="read-more">
+                
+                <a href="/2020/03/02/git/command/" title="Git 命令清单" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b>
             </span>
         </div>

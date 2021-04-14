@@ -2796,7 +2796,7 @@ h1.title {
 .content h2 a.headerlink:after {
   top: 0;
   bottom: 1px;
-  left: -7px;
+  left: -10px;
   width: 5px;
   opacity: 1;
 }
@@ -2880,7 +2880,7 @@ h1.title {
 }
 .content > h2 {
   margin-top: 2rem;
-  margin-left: 7px;
+  margin-left: 10px;
   margin-bottom: 0.8rem;
   color: #000;
 }
