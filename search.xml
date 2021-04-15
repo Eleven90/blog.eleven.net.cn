@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>Apple M1 问题汇总</title>
+      <title>Apple M1 芯片问题汇总</title>
       <link href="/2021/04/14/mac/command/"/>
       <url>/2021/04/14/mac/command/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h2 id="使用-Rosetta-打开"><a href="#使用-Rosetta-打开" class="headerlink" title="使用 Rosetta 打开"></a>使用 Rosetta 打开</h2><p><a href="https://www.macwk.com/article/apple-silicon-m1-application-crash-repair">https://www.macwk.com/article/apple-silicon-m1-application-crash-repair</a></p><h2 id="nvm-切换-x86-arm-架构终端操作命令"><a href="#nvm-切换-x86-arm-架构终端操作命令" class="headerlink" title="nvm 切换 x86/arm 架构终端操作命令"></a>nvm 切换 x86/arm 架构终端操作命令</h2><pre><code class="zsh"># Check what version you&#39;re running:$ node --versionv14.15.4# Check architecture of the `node` binary:$ node -p process.archarm64# This confirms that the arch is for the M1 chip, which is causing the problems.# So we need to uninstall it.# We can&#39;t uninstall the version we are currently using, so switch to another version:$ nvm install v12.20.1# Now uninstall the version we want to replace:$ nvm uninstall v14.15.4# Launch a new zsh process under the 64-bit X86 architecture:$ arch -x86_64 zsh# Install node using nvm. This should download the precompiled x64 binary:$ nvm install v14.15.4# Now check that the architecture is correct:$ node -p process.archx64# It is now safe to return to the arm64 zsh process:$ exit# We&#39;re back to a native shell:$ archarm64# And the new version is now available to use:$ nvm use v14.15.4Now using node v14.15.4 (npm v6.14.10)</code></pre>]]></content>
       
       
       <categories>

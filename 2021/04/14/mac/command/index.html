@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Apple M1 问题汇总 - Eleven 的博客</title>
+    <title>Apple M1 芯片问题汇总 - Eleven 的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    
+    <meta name="description" content="使用 Rosetta 打开https://www.macwk.com/article/apple-silicon-m1-application-crash-repair
+nvm 切换 x86/arm,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven 的博客" type="application/atom+xml"> 
     <link rel="icon" href="/img/abc/eleven.net.cn.jpeg"> 
@@ -57,7 +58,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/abc/eleven.net.cn.jpeg" alt="" data-url="https://blog.eleven.net.cn">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">Apple M1 问题汇总</h3>
+        <h3 class="subtitle">Apple M1 芯片问题汇总</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -79,7 +80,7 @@
             animation-duration: 1.2s;
             background-image: 
                 radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.1), #100e17),
-                url(/img/welcome-cover.jpg) ">
+                url(/imgs/arm_core.jpeg) ">
         </div>
         <div class="else">
             <p class="animated fadeInDown">
@@ -89,14 +90,14 @@
                 
                 四月 14, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/04/14/mac/command/" title="Apple M1 问题汇总" class="">Apple M1 问题汇总</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/04/14/mac/command/" title="Apple M1 芯片问题汇总" class="">Apple M1 芯片问题汇总</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    0
+                    1.4k
                 </span>
                 
                 
@@ -106,7 +107,7 @@
                 </span>
                 
                 
-                <span id="/2021/04/14/mac/command/" class="leancloud_visitors" data-flag-title="Apple M1 问题汇总">
+                <span id="/2021/04/14/mac/command/" class="leancloud_visitors" data-flag-title="Apple M1 芯片问题汇总">
                     <b class="iconfont icon-read"></b> <i>阅读次数</i>
                     <span class="leancloud-visitors-count">--</span>
                 </span>
@@ -135,7 +136,35 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            
+            <h2 id="使用-Rosetta-打开"><a href="#使用-Rosetta-打开" class="headerlink" title="使用 Rosetta 打开"></a>使用 Rosetta 打开</h2><p><a target="_blank" rel="noopener" href="https://www.macwk.com/article/apple-silicon-m1-application-crash-repair">https://www.macwk.com/article/apple-silicon-m1-application-crash-repair</a></p>
+<h2 id="nvm-切换-x86-arm-架构终端操作命令"><a href="#nvm-切换-x86-arm-架构终端操作命令" class="headerlink" title="nvm 切换 x86/arm 架构终端操作命令"></a>nvm 切换 x86/arm 架构终端操作命令</h2><pre><code class="zsh"># Check what version you&#39;re running:
+$ node --version
+v14.15.4
+# Check architecture of the `node` binary:
+$ node -p process.arch
+arm64
+# This confirms that the arch is for the M1 chip, which is causing the problems.
+# So we need to uninstall it.
+# We can&#39;t uninstall the version we are currently using, so switch to another version:
+$ nvm install v12.20.1
+# Now uninstall the version we want to replace:
+$ nvm uninstall v14.15.4
+# Launch a new zsh process under the 64-bit X86 architecture:
+$ arch -x86_64 zsh
+# Install node using nvm. This should download the precompiled x64 binary:
+$ nvm install v14.15.4
+# Now check that the architecture is correct:
+$ node -p process.arch
+x64
+# It is now safe to return to the arm64 zsh process:
+$ exit
+# We&#39;re back to a native shell:
+$ arch
+arm64
+# And the new version is now available to use:
+$ nvm use v14.15.4
+Now using node v14.15.4 (npm v6.14.10)</code></pre>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
                 data-autoplay="true">
@@ -204,6 +233,13 @@
             </div>
             
             
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Rosetta-%E6%89%93%E5%BC%80"><span class="toc-number">1.</span> <span class="toc-text">使用 Rosetta 打开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nvm-%E5%88%87%E6%8D%A2-x86-arm-%E6%9E%B6%E6%9E%84%E7%BB%88%E7%AB%AF%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">nvm 切换 x86&#x2F;arm 架构终端操作命令</span></a></li></ol>
+                </div>
+            </div>
             
             
         </div>
