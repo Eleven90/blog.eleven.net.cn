@@ -96,13 +96,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    20k
+                    28k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    19 mins.
+                    26 mins.
                 </span>
                 
                 
@@ -541,107 +541,173 @@ module.exports = &#123;
 </li>
 </ol>
 <p>最后，放一份完整的 craco.config.js 配置文件，方便参照。</p>
-<pre><code class="js">/*
- * @Desc: craco 重写 CRA 配置
- *  - https://github.com/gsoft-inc/craco
+<pre><code class="js">/**
+ * craco 重写 CRA 配置
+ *  - GitHub：https://github.com/gsoft-inc/craco
+ *  - 配置参数：https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#configuration-overview
+ *  - 快速指南：https://juejin.im/post/6871148364919111688
  *
- * @Author: Eleven
- * @Date: 2020-08-14 12:14:00
- * @Last Modified by: Eleven
- * @Last Modified time: 2020-09-11 10:42:48
+ * Tips：
+ *  1、区分 node 运行环境 —— NODE_ENV
+ *    - whenDev ☞ process.env.NODE_ENV === &#39;development&#39;
+ *    - whenTest ☞ process.env.NODE_ENV === &#39;test&#39;
+ *    - whenProd ☞ process.env.NODE_ENV === &#39;production&#39;
+ *  2、NODE_ENV 可以区分 node 运行环境，仅支持 development、test、production，
+ *    自定义的 REACT_APP_BUILD_ENV 用于区分编译环境，支持 development、test、uat、production。
+ *  3、craco 有提供一些好用的 plugin（https://github.com/gsoft-inc/craco#community-maintained-plugins），推荐优先考虑使用现成的 craco plugin 去解决问题。
+ *  4、CRA 脚手架相关的配置覆盖，优先使用 craco 提供的快捷方式去配置。解决不了的问题，在 configure 函数中配置。
+ *    推荐 configure 配置使用函数形式，而非对象形式。虽然，函数形式更复杂了一点，但是二者是互斥的，只能选择其中一种。
  */
 
-const path = require(&#39;path&#39;)
-const webpack = require(&#39;webpack&#39;)
-const &#123; whenDev, whenProd, when &#125; = require(&#39;@craco/craco&#39;)
-const &#123; BundleAnalyzerPlugin &#125; = require(&#39;webpack-bundle-analyzer&#39;)
-const CracoLessPlugin = require(&#39;craco-less&#39;)
-const CircularDependencyPlugin = require(&#39;circular-dependency-plugin&#39;)
-const TsconfigPathsPlugin = require(&#39;tsconfig-paths-webpack-plugin&#39;)
-const MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;)
-const fastRefreshCracoPlugin = require(&#39;craco-fast-refresh&#39;)
+const path = require(&#39;path&#39;);
+const TerserPlugin = require(&#39;terser-webpack-plugin&#39;);
+const MiniCssExtractPlugin = require(&#39;mini-css-extract-plugin&#39;);
+const &#123; whenDev, whenProd, when &#125; = require(&#39;@craco/craco&#39;);
+const &#123; BundleAnalyzerPlugin &#125; = require(&#39;webpack-bundle-analyzer&#39;);
+const CracoLessPlugin = require(&#39;craco-less&#39;);
+const CracoScopedCssPlugin = require(&#39;craco-plugin-scoped-css&#39;);
+const CircularDependencyPlugin = require(&#39;circular-dependency-plugin&#39;);
+const TsconfigPathsPlugin = require(&#39;tsconfig-paths-webpack-plugin&#39;);
+const vConsolePlugin = require(&#39;vconsole-webpack-plugin&#39;);
+const genericNames = require(&#39;generic-names&#39;);
+const antdTheme = require(&#39;./antd.theme&#39;);
+
+// 判断编译环境是否为生产
+const isBuildProd = process.env.REACT_APP_BUILD_ENV === &#39;production&#39;;
+// 判断 node 运行环境是否为 production
+const isProd = process.env.NODE_ENV === &#39;production&#39;;
+const isBuildAnalyzer = process.env.BUILD_ANALYZER === &#39;true&#39;;
+const removeFilenameHash = process.env.REMOVE_FILENAME_HASH === &#39;true&#39;;
+const shouldDropDebugger = process.env.SHOULD_DROP_DEBUGGER === &#39;true&#39;;
+const shouldDropConsole = process.env.SHOULD_DROP_CONSOLE === &#39;true&#39;;
+const enableVConsole = process.env.ENABLE_VCONSOLE === &#39;true&#39;;
+const localIdentName = &#39;[local]-[hash:base64:5]&#39;;
 
 module.exports = &#123;
-  // 扩展 babel 配置
+  /**
+   * 扩展 babel 配置
+   */
   babel: &#123;
+    loaderOptions: &#123;
+      /**
+       * Babel 编译时，会处理 core-js（未来可能会被修复），
+       * 导致 polyfill 内部代码发生了变化，产生一些微小的影响，如 Symbol 问题。
+       * 暂时我们手动声明略过。
+       * https://github.com/zloirock/core-js/issues/514
+       * https://github.com/rails/webpacker/pull/2031
+       */
+      exclude: [
+        /node_modules[\\/]core-js/,
+        /node_modules[\\/]react-app-polyfill/,
+      ],
+    &#125;,
     presets: [
       [
         &#39;@babel/preset-env&#39;,
         &#123;
-          modules: false, // 对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
-          useBuiltIns: &#39;entry&#39;, // browserslist环境不支持的所有垫片都导入
+          modules: false, // 对 ES6 的模块文件不做转化，以便使用 webpack 支持的 tree shaking、sideEffects
+          useBuiltIns: &#39;entry&#39;, // entry ☞ 指定的 browserslist 环境，不支持的特性垫片都导入
           // https://babeljs.io/docs/en/babel-preset-env#usebuiltins
           // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md
           corejs: &#123;
-            version: 3, // 使用core-js@3
+            version: 3, // 使用 core-js@3
             proposals: true,
           &#125;,
         &#125;,
       ],
     ],
     plugins: [
+      /**
+       * AntDesign 按需加载
+       */
       [
-        &#39;import&#39;,
+        &#39;babel-plugin-import&#39;,
         &#123;
           libraryName: &#39;antd&#39;,
           libraryDirectory: &#39;es&#39;,
-          style: &#39;css&#39;,
+          style: true,
         &#125;,
         &#39;antd&#39;,
       ],
+      [
+        // @babel/plugin-proposal-decorators 需要在 @babel/plugin-proposal-class-properties 之前，保证装饰器先处理
+        &#39;@babel/plugin-proposal-decorators&#39;,
+        &#123;
+          legacy: true, // 推荐
+        &#125;,
+      ],
+      [
+        &#39;@babel/plugin-proposal-class-properties&#39;,
+        &#123;
+          loose: true, // babel 编译时，对 class 的属性采用赋值表达式，而不是 Object.defineProperty（更简洁）
+        &#125;,
+      ],
+      /**
+       * babel-plugin-react-css-modules
+       *  - GitHub: https://github.com/gajus/babel-plugin-react-css-modules
+       *  - http://ekoneko.github.io/blog/engineering/stop-using-css-in-js/
+       *  - https://zhuanlan.zhihu.com/p/26878157
+       */
+      [
+        &#39;react-css-modules&#39;,
+        &#123;
+          exclude: &#39;node_modules&#39;,
+          filetypes: &#123;
+            &#39;.scss&#39;: &#123;
+              syntax: &#39;postcss-scss&#39;,
+            &#125;,
+            &#39;.less&#39;: &#123;
+              syntax: &#39;postcss-less&#39;,
+            &#125;,
+          &#125;,
+          // 必须保持和 css-modules 的 localIdentName 一致的命名
+          // https://github.com/gajus/babel-plugin-react-css-modules/issues/291
+          // generic-names 用于解决 css-loader v4 hash 的兼容
+          generateScopedName: genericNames(localIdentName),
+          webpackHotModuleReloading: true,
+          autoResolveMultipleImports: true,
+          handleMissingStyleName: &#39;warn&#39;,
+        &#125;,
+      ],
+      /**
+       * https://github.com/tleunen/babel-plugin-module-resolver
+       *
+       * 解决 babel-plugin-react-css-modules 不兼容 webpack alias 问题
+       *
+       * Support for Webpack resolve aliases
+       *  https://github.com/gajus/babel-plugin-react-css-modules/issues/46
+       */
+      [
+        &#39;module-resolver&#39;,
+        &#123;
+          alias: &#123;
+            &#39;@&#39;: path.resolve(__dirname, &#39;src&#39;),
+          &#125;,
+        &#125;,
+      ],
     ],
   &#125;,
-  // 扩展 webpack 相关配置
+  style: &#123;
+    /**
+     * css modules 配置
+     */
+    modules: &#123;
+      // 必须保持和 babel-plugin-react-css-modules 一致的命名
+      localIdentName,
+    &#125;,
+  &#125;,
+  /**
+   * 扩展 webpack 相关配置
+   */
   webpack: &#123;
     /**
-     * 重写 webpack 任意配置
-     *  - 与直接定义 configure 对象方式互斥
+     * 新增 webpack plugin
      */
-    configure: (webpackConfig, &#123; env, paths &#125;) =&gt; &#123;
-      webpackConfig.output = &#123;
-        ...webpackConfig.output,
-        ...&#123;
-          filename: whenDev(() =&gt; &#39;static/js/bundle.js&#39;, &#39;static/js/[name].js&#39;),
-          chunkFilename: &#39;static/js/[name].js&#39;,
-        &#125;,
-      &#125;
-
-      webpackConfig.resolve.extensions = [
-        ...webpackConfig.resolve.extensions,
-        ...[&#39;.scss&#39;, &#39;.less&#39;],
-      ]
-
-      webpackConfig.optimization.splitChunks = &#123;
-        ...webpackConfig.optimization.splitChunks,
-        ...&#123;
-          chunks: &#39;all&#39;,
-          name: true,
-        &#125;,
-      &#125;
-
-      // 覆盖已经内置的 plugin 配置
-      webpackConfig.plugins.map((plugin) =&gt; &#123;
-        whenProd(() =&gt; &#123;
-          if (plugin instanceof MiniCssExtractPlugin) &#123;
-            Object.assign(plugin.options, &#123;
-              filename: &#39;static/css/[name].css&#39;,
-              chunkFilename: &#39;static/css/[name].css&#39;,
-            &#125;)
-          &#125;
-        &#125;)
-        return plugin
-      &#125;)
-
-      return webpackConfig
-    &#125;,
-    alias: &#123;
-      &#39;@&#39;: path.resolve(__dirname, &#39;src&#39;),
-    &#125;,
-    resolve: &#123;
-      plugins: [new TsconfigPathsPlugin()],
-    &#125;,
     plugins: [
-      // 新增 plugin
+      /**
+       * 模块间循环依赖检测插件
+       *  - https://juejin.im/post/6844904017848434702
+       */
       ...whenDev(
         () =&gt; [
           new CircularDependencyPlugin(&#123;
@@ -652,44 +718,218 @@ module.exports = &#123;
             cwd: process.cwd(),
           &#125;),
         ],
-        [],
+        []
       ),
-      ...whenProd(
+      /**
+       * 编译产物分析
+       *  - https://www.npmjs.com/package/webpack-bundle-analyzer
+       */
+      ...when(isBuildAnalyzer, () =&gt; [new BundleAnalyzerPlugin()], []),
+      /**
+       * vconsole-webpack-plugin
+       *  - 生产环境，强制不会生效
+       *
+       * 必须 entry 为数组插件才能生效，如果不是需自己改写
+       * https://github.com/diamont1001/vconsole-webpack-plugin/issues/44
+       */
+      ...when(
+        !isBuildProd,
         () =&gt; [
-          // https://www.npmjs.com/package/webpack-bundle-analyzer
-          new BundleAnalyzerPlugin(&#123;
-            analyzerMode: &#39;static&#39;, // html 文件方式输出编译分析
-            openAnalyzer: false,
-            reportFilename: path.resolve(__dirname, `analyzer/index.html`),
+          new vConsolePlugin(&#123;
+            enable: !isBuildProd &amp;&amp; enableVConsole,
           &#125;),
         ],
-        [],
+        []
       ),
     ],
-  &#125;,
-  // craco 提供的插件
-  plugins: [
-    ...whenDev(
-      () =&gt; [
-        &#123;
-          plugin: fastRefreshCracoPlugin,
+    /**
+     * 重写 webpack 任意配置
+     *  - configure 能够重写 webpack 相关的所有配置，但是，仍然推荐你优先阅读 craco 提供的快捷配置，把解决不了的配置放到 configure 里解决；
+     *  - 这里选择配置为函数，与直接定义 configure 对象方式互斥；
+     */
+    configure: (webpackConfig, &#123; env, paths &#125;) =&gt; &#123;
+      /**
+       * 改写 entry 为数组，确保 vconsole-webpack-plugin 可以生效
+       * https://github.com/diamont1001/vconsole-webpack-plugin/issues/44
+       */
+      if (isProd &amp;&amp; typeof webpackConfig.entry === &#39;string&#39;) &#123;
+        webpackConfig.entry = [webpackConfig.entry];
+      &#125;
+
+      /**
+       * 修改 output
+       */
+      webpackConfig.output = &#123;
+        ...webpackConfig.output,
+        ...when(
+          isProd,
+          () =&gt; (&#123;
+            // 命名上移除 chunk 字样
+            chunkFilename: &#39;static/js/[name].[contenthash:8].js&#39;,
+          &#125;),
+          &#123;&#125;
+        ),
+        // 支持移除 js 文件名的 hash 值
+        ...when(
+          isProd &amp;&amp; removeFilenameHash,
+          () =&gt; (&#123;
+            filename: &#39;static/js/[name].js&#39;,
+            chunkFilename: &#39;static/js/[name].js&#39;,
+          &#125;),
+          &#123;&#125;
+        ),
+      &#125;;
+
+      /**
+       * 配合私有 source map 文件，修改 map 文件链接时，需设置为 false
+       * （仅编译生产代码时修改 map 文件链接）
+       */
+      webpackConfig.devtool = isBuildProd ? false : webpackConfig.devtool;
+
+      /**
+       * 扩展 extensions
+       */
+      webpackConfig.resolve.extensions = [
+        ...webpackConfig.resolve.extensions,
+        ...[&#39;.scss&#39;, &#39;.less&#39;],
+      ];
+
+      webpackConfig.resolve.plugins = [
+        ...webpackConfig.resolve.plugins,
+        ...[
+          /**
+           * 自动将 tsconfig 里的 paths 注入到 webpack alias
+           * （意味着你不再需要额外增加 webpack alias）
+           *  - https://github.com/dividab/tsconfig-paths-webpack-plugin
+           */
+          new TsconfigPathsPlugin(&#123;
+            extensions: [&#39;.ts&#39;, &#39;.tsx&#39;, &#39;.js&#39;, &#39;.jsx&#39;],
+          &#125;),
+        ],
+      ];
+
+      webpackConfig.optimization.minimizer.map(plugin =&gt; &#123;
+        /**
+         * TerserPlugin
+         */
+        if (plugin instanceof TerserPlugin) &#123;
+          Object.assign(plugin.options.terserOptions.compress, &#123;
+            drop_debugger: shouldDropDebugger, // 删除 debugger
+            drop_console: shouldDropConsole, // 删除 console
+          &#125;);
+        &#125;
+
+        return plugin;
+      &#125;);
+
+      /**
+       * webpack split chunks
+       */
+      webpackConfig.optimization.splitChunks = &#123;
+        ...webpackConfig.optimization.splitChunks,
+        ...&#123;
+          chunks: &#39;all&#39;,
+          name: true,
         &#125;,
-      ],
-      [],
-    ),
+      &#125;;
+
+      /**
+       * 覆盖已经内置的 webpack plugins
+       */
+      webpackConfig.plugins.map(plugin =&gt; &#123;
+        /**
+         * 支持移除 css 文件名的 hash 值
+         */
+        whenProd(() =&gt; &#123;
+          if (plugin instanceof MiniCssExtractPlugin) &#123;
+            Object.assign(
+              plugin.options,
+              &#123;
+                // 命名上移除 chunk 字样
+                chunkFilename: &#39;static/css/[name].[contenthash:8].css&#39;,
+              &#125;,
+              when(
+                removeFilenameHash,
+                () =&gt; (&#123;
+                  filename: &#39;static/css/[name].css&#39;,
+                  chunkFilename: &#39;static/css/[name].css&#39;,
+                &#125;),
+                &#123;&#125;
+              )
+            );
+          &#125;
+        &#125;);
+
+        return plugin;
+      &#125;);
+
+      // 返回重写后的新配置
+      return webpackConfig;
+    &#125;,
+  &#125;,
+  /**
+   * 新增 craco 提供的 plugin
+   */
+  plugins: [
+    /**
+     * 支持 less
+     *  - https://github.com/DocSpring/craco-less
+     *  - options 参数：https://github.com/DocSpring/craco-less#configuration
+     */
     &#123;
       plugin: CracoLessPlugin,
       options: &#123;
+        modifyLessRule(lessRule, context) &#123;
+          return &#123;
+            ...lessRule,
+            ...&#123;
+              test: /\.less$/,
+              exclude: /\.module\.less$/,
+            &#125;,
+          &#125;;
+        &#125;,
         lessLoaderOptions: &#123;
           lessOptions: &#123;
-            // modifyVars: &#123; &#39;@primary-color&#39;: &#39;#1DA57A&#39; &#125;,
+            // 自定义 antd 主题
+            modifyVars: antdTheme,
             javascriptEnabled: true,
           &#125;,
         &#125;,
       &#125;,
     &#125;,
+    /**
+     * 支持 less module
+     *  - https://github.com/DocSpring/craco-less#configuration
+     */
+    &#123;
+      plugin: CracoLessPlugin,
+      options: &#123;
+        modifyLessRule(lessRule, context) &#123;
+          return &#123;
+            ...lessRule,
+            ...&#123;
+              test: /\.module\.less$/,
+              exclude: undefined,
+            &#125;,
+          &#125;;
+        &#125;,
+        cssLoaderOptions: &#123;
+          modules: &#123;
+            // 必须保持和 babel-plugin-react-css-modules 一致的命名
+            localIdentName,
+          &#125;,
+        &#125;,
+      &#125;,
+    &#125;,
+    /**
+     * react scoped css (only scss/css)
+     *  - https://github.com/gaoxiaoliangz/react-scoped-css
+     */
+    &#123;
+      plugin: CracoScopedCssPlugin,
+    &#125;,
   ],
-&#125;</code></pre>
+&#125;;</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
