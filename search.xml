@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Charles 抓包/代理 websockt 请求</title>
+      <link href="/2021/05/29/charles/websocket/"/>
+      <url>/2021/05/29/charles/websocket/</url>
+      
+        <content type="html"><![CDATA[<p>Charles 中想要代理 websockt 请求，过程有些复杂、坑点颇多。好不容易调通，记录一波。</p><h2 id="charles-需要开启若干设置"><a href="#charles-需要开启若干设置" class="headerlink" title="charles 需要开启若干设置"></a>charles 需要开启若干设置</h2><p>1、打开 Proxy - Proxy Settings，勾选 Enable SOCKS proxy，默认配置不必修改，如下图：</p><p><img src="/imgs/charles_01.png" alt=""></p><p>2、在 Proxy - Proxy Settings - macos 面板中，确保勾选 Use SOCKS proxy，如下图：</p><p><img src="/imgs/charles_02.png" alt=""></p><h2 id="Mac-的网络设置中勾选若干项"><a href="#Mac-的网络设置中勾选若干项" class="headerlink" title="Mac 的网络设置中勾选若干项"></a>Mac 的网络设置中勾选若干项</h2><p>确保勾选了 SOCKS 选项，如下图：</p><p><img src="/imgs/mac_01.png" alt=""></p><p><img src="/imgs/mac_02.png" alt=""></p><p>SOCKS 代理的端口 8889 是 charles 代理 websockt 的默认端口，一般情况下不要去修改它。</p><p>以上工作都完成，那么你应该可以愉快地抓取、代理 websockt 请求了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Charles </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> websocket </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Apple M1 芯片问题汇总</title>
       <link href="/2021/04/14/mac/command/"/>
       <url>/2021/04/14/mac/command/</url>

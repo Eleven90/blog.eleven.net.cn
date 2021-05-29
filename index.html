@@ -234,20 +234,20 @@
   <div id="post0" class="else">
     <p class="animated fadeInDown">
       
-      <a href="/categories/MacOS"
-        ><b>「 </b>MACOS<b> 」</b></a
+      <a href="/categories/Charles"
+        ><b>「 </b>CHARLES<b> 」</b></a
       >
-       四月 14, 2021
+       五月 29, 2021
     </p>
     <h3 class="post-title animated fadeInDown">
-      <a href="/2021/04/14/mac/command/" title="Apple M1 芯片问题汇总" class="posttitle">Apple M1 芯片问题汇总</a>
+      <a href="/2021/05/29/charles/websocket/" title="Charles 抓包&#x2F;代理 websockt 请求" class="posttitle">Charles 抓包&#x2F;代理 websockt 请求</a>
     </h3>
     
     <p class="post-count animated fadeInDown">
       
       <span>
         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-        1.3k
+        760
       </span>
        
       
@@ -258,7 +258,7 @@
        
       <!-- 
       <span
-        id="/2021/04/14/mac/command/"
+        id="/2021/05/29/charles/websocket/"
         class="leancloud_visitors"
         data-flag-title=""
       >
@@ -269,13 +269,13 @@
       <!-- 是统计网站总的访问量，而非某篇文章 -->
       <!--  -->
     </p>
-      <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/MacOS/" rel="tag">MacOS</a></li></ul> 
+      <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/websocket/" rel="tag">websocket</a></li></ul> 
     <div class="md-content animated fadeIn">
-       <p><a target="_blank" rel="noopener" href="https://www.macwk.com/article/apple-silicon-m1-application-crash-repair">https://www.macwk.com/article/apple-silicon-m1-application-crash-repair</a></p>
-<pre><code class="zsh"># Check what version you&#39...</code></pre> 
+       <p>Charles 中想要代理 websockt 请求，过程有些复杂、坑点颇多。好不容易调通，记录一波。</p>
+<p>1、打开 Proxy - Proxy Settings，勾选 Enable SOCKS proxy...</p> 
       <span class="read-more">
         
-        <a href="/2021/04/14/mac/command/" title="Apple M1 芯片问题汇总" class="posttitle">查看全文</a>
+        <a href="/2021/05/29/charles/websocket/" title="Charles 抓包/代理 websockt 请求" class="posttitle">查看全文</a>
         <b class="iconfont icon-arrow-right- gradient-text"></b
       ></span>
     </div>
@@ -297,6 +297,68 @@
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.2), #100e17),
+            url(/imgs/arm_core.jpeg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/MacOS">
+                  <b>「 </b>MACOS<b> 」</b>
+                </a>
+            
+            四月 14, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/04/14/mac/command/" title="Apple M1 芯片问题汇总" class="posttitle">Apple M1 芯片问题汇总</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        1.3k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                <!-- 
+                    <span id="/2021/04/14/mac/command/" class="leancloud_visitors" data-flag-title="">
+                        <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                        <span class="leancloud-visitors-count">--</span>
+                    </span>
+                 -->
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/MacOS/" rel="tag">MacOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p><a target="_blank" rel="noopener" href="https://www.macwk.com/article/apple-silicon-m1-application-crash-repair">https://www.macwk.com/article/apple-silicon-m1-application-crash-repair</a></p>
+<pre><code class="zsh"># Check what version you&#39;re running:
+$ node --version
+v14.15.4
+# Check architecture of the `node` binary:
+$ node -p process.arch
+arm64
+# This confirms that the arch is for the...</code></pre>
+            
+            <span class="read-more">
+                
+                <a href="/2021/04/14/mac/command/" title="Apple M1 芯片问题汇总" class="posttitle">查看全文</a>
+                <b class="iconfont icon-arrow-right- gradient-text"></b>
+            </span>
+        </div>
+    </div>
+</div>
+
+
 <div class="post" id="post">
     <div class="post-cover animated fadeIn" style="
             background-image:
@@ -786,73 +848,6 @@ const CircularDependencyPlug...</code></pre>
             <span class="read-more">
                 
                 <a href="/2020/06/11/nodejs/circular-deps/" title="模块间循环引用问题" class="posttitle">查看全文</a>
-                <b class="iconfont icon-arrow-right- gradient-text"></b>
-            </span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.2), #100e17),
-            url(/img/welcome-cover.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/NPM">
-                  <b>「 </b>NPM<b> 」</b>
-                </a>
-            
-            六月 11, 2020
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2020/06/11/nodejs/patch-package/" title="自动修改 node_moduels 源码" class="posttitle">自动修改 node_moduels 源码</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        2.5k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        2 mins.
-                    </span>
-                
-                <!-- 
-                    <span id="/2020/06/11/nodejs/patch-package/" class="leancloud_visitors" data-flag-title="">
-                        <b class="iconfont icon-read"></b> <i>阅读次数</i>
-                        <span class="leancloud-visitors-count">--</span>
-                    </span>
-                 -->
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/NPM/" rel="tag">NPM</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>有时候 node_modules 中的第三方包有问题或需要修改几行源码，我们可以怎么办？</p>
-<ol>
-<li><p>去给作者提 issues？可能得不到回复。</p>
-</li>
-<li><p>自己在 node_modules 里直接修改源码？下一次重新安装包，或者其他同事 install 的时候，被修改过的源码又恢复如初了。</p>
-</li>
-<li><p>不用他的包，自己写一个？……</p>
-</li>
-</ol>
-<p>社区提供了一个工具：<a target="_blank" rel="noopener" href="https://github.com/ds300/patch-package">patch-package</a>，专门用来处理修改 node_modules 包源码的问题。</p>
-<p>使用方法如下，注意 yarn、npm 使用时的差异，推荐使用 yarn。</p>
-<ol>
-<li><p>安装 ...</p></li></ol>
-            
-            <span class="read-more">
-                
-                <a href="/2020/06/11/nodejs/patch-package/" title="自动修改 node_moduels 源码" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b>
             </span>
         </div>
