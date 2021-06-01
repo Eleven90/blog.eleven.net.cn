@@ -5,15 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Charles 抓包/代理 websockt 请求 - Eleven 的博客</title>
+    <title>Charles 抓包/代理 websocket 请求 - Eleven 的博客</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Eleven,前端,"> 
-    <meta name="description" content="Charles 中如何抓包、代理 websockt 请求？过程有些复杂、坑点颇多，这里提供一份可用的方案。
+    <meta name="description" content="Charles 中如何抓包、代理 websocket 请求？过程有些复杂、坑点颇多，这里提供一份可用的方案。
 请先确保你的 charles 能够抓到浏览器的请求。
 通常你可能需要注意以下几类问题：
-
 ,"> 
     <meta name="author" content="eleven.net.cn"> 
     <link rel="alternative" href="atom.xml" title="Eleven 的博客" type="application/atom+xml"> 
@@ -61,7 +60,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/abc/eleven.net.cn.jpeg" alt="" data-url="https://blog.eleven.net.cn">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">Charles 抓包/代理 websockt 请求</h3>
+        <h3 class="subtitle">Charles 抓包/代理 websocket 请求</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -93,7 +92,7 @@
                 
                 五月 29, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/05/29/charles/websocket/" title="Charles 抓包&#x2F;代理 websockt 请求" class="">Charles 抓包&#x2F;代理 websockt 请求</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/05/29/charles/websocket/" title="Charles 抓包&#x2F;代理 websocket 请求" class="">Charles 抓包&#x2F;代理 websocket 请求</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
@@ -110,7 +109,7 @@
                 </span>
                 
                 
-                <span id="/2021/05/29/charles/websocket/" class="leancloud_visitors" data-flag-title="Charles 抓包/代理 websockt 请求">
+                <span id="/2021/05/29/charles/websocket/" class="leancloud_visitors" data-flag-title="Charles 抓包/代理 websocket 请求">
                     <b class="iconfont icon-read"></b> <i>阅读次数</i>
                     <span class="leancloud-visitors-count">--</span>
                 </span>
@@ -139,7 +138,7 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <p>Charles 中如何抓包、代理 websockt 请求？过程有些复杂、坑点颇多，这里提供一份可用的方案。</p>
+            <p>Charles 中如何抓包、代理 websocket 请求？过程有些复杂、坑点颇多，这里提供一份可用的方案。</p>
 <p>请先确保你的 charles 能够抓到浏览器的请求。</p>
 <p>通常你可能需要注意以下几类问题：</p>
 <ul>
@@ -149,7 +148,7 @@
 <li>如果有使用某些 VPN 代理工具，可能会存在代理冲突。如果遇到了抓不到请求的问题，推荐先关掉 VPN 工具，随后重启 charles（重启比较重要，它会重置系统的网络代理配置）</li>
 </ul>
 <p>如果还有问题，推荐阅读这篇使用指南 ☞ <a target="_blank" rel="noopener" href="https://blog.csdn.net/mxw2552261/article/details/78645118">传送门</a>。</p>
-<p>保证能正常抓到请求，再继续向下去看怎么抓取 websockt，当前使用的 charles 版本是 v4.6.1。</p>
+<p>保证能正常抓到请求，再继续向下去看怎么抓取 websocket，当前使用的 charles 版本是 v4.6.1。</p>
 <h2 id="charles-需要开启若干设置"><a href="#charles-需要开启若干设置" class="headerlink" title="charles 需要开启若干设置"></a>charles 需要开启若干设置</h2><p>1、打开 Proxy - Proxy Settings，勾选 Enable SOCKS proxy，默认配置不必修改，如下图：</p>
 <p><img src="/imgs/charles_01.png" alt=""></p>
 <p>2、在 Proxy - Proxy Settings - macos 面板中，确保勾选 Use SOCKS proxy，如下图：</p>
@@ -157,7 +156,7 @@
 <h2 id="Mac-的网络设置中勾选若干项"><a href="#Mac-的网络设置中勾选若干项" class="headerlink" title="Mac 的网络设置中勾选若干项"></a>Mac 的网络设置中勾选若干项</h2><p>确保勾选了 SOCKS 选项，如下图：</p>
 <p><img src="/imgs/mac_01.png" alt=""></p>
 <p><img src="/imgs/mac_02.png" alt=""></p>
-<p>SOCKS 代理的端口 8889 是 charles 代理 websockt 的默认端口，一般情况下不要去修改它。</p>
+<p>SOCKS 代理的端口 8889 是 charles 代理 websocket 的默认端口，一般情况下不要去修改它。</p>
 <p>以上工作都完成，那么你应该可以愉快地抓取、代理 websockt 请求了。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
