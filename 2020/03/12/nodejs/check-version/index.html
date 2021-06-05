@@ -200,14 +200,12 @@ function command(cmd, options, callback) &#123;
   return exec(cmd, &#123; ...options &#125;, callback);
 &#125;</code></pre>
 <h4 id="配置-Git-钩子"><a href="#配置-Git-钩子" class="headerlink" title="配置 Git 钩子"></a>配置 Git 钩子</h4><ol>
-<li><p>先安装 <code>husky</code>，用于管理 git 钩子，当然，使用原生的也可以。</p>
-<pre><code class="bash">yarn add husky -D</code></pre>
+<li><p>先安装 <code>yorkie</code>，用于管理 git 钩子，当然，使用原生的也可以。</p>
+<pre><code class="bash">yarn add yorkie -D</code></pre>
 </li>
 <li><p>在项目的 package.json 文件中增加以下配置：</p>
-<pre><code class="json">&quot;husky&quot;: &#123;
-  &quot;hooks&quot;: &#123;
-    &quot;post-commit&quot;: &quot;exec &lt; /dev/tty &amp;&amp; node scripts/check-version.js&quot;
-  &#125;
+<pre><code class="json">&quot;gitHooks&quot;: &#123;
+  &quot;post-commit&quot;: &quot;exec &lt; /dev/tty &amp;&amp; node scripts/check-version.js&quot;
 &#125;,</code></pre>
 </li>
 </ol>
